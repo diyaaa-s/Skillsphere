@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>How It Works — SkillSphere</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    .page-hero { padding:7rem 0 4rem;text-align:center;border-bottom:1px solid var(--border);background:var(--bg-2); }
+    .page-hero h1 { font-family:var(--font-head);font-size:clamp(2rem,5vw,3.5rem);font-weight:800;letter-spacing:-.02em;margin-bottom:1rem; }
+    .page-hero p { color:var(--text-muted);font-size:1.1rem;max-width:560px;margin:0 auto; }
+    .hiw-section { padding:5rem 0; }
+    .big-steps { display:flex;flex-direction:column;gap:5rem;max-width:800px;margin:0 auto; }
+    .big-step { display:grid;grid-template-columns:80px 1fr;gap:2rem;align-items:start; }
+    .big-step__num { width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:1.5rem;font-weight:800;color:#fff;flex-shrink:0;box-shadow:0 0 30px rgba(0,229,255,.25); }
+    .big-step__content h3 { font-family:var(--font-head);font-size:1.5rem;font-weight:800;margin-bottom:.75rem; }
+    .big-step__content p  { color:var(--text-muted);line-height:1.7;margin-bottom:1rem; }
+    .big-step__detail { background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem; }
+    .detail-row { display:flex;align-items:center;gap:.75rem;font-size:.9rem;padding:.5rem 0;border-bottom:1px solid var(--border); }
+    .detail-row:last-child{border-bottom:none}
+    .connector { width:2px;height:4rem;background:linear-gradient(var(--accent),var(--accent-2));margin-left:35px;opacity:.3; }
+    .faq-section { padding:5rem 0;background:var(--bg-2);border-top:1px solid var(--border); }
+    .faq-list { max-width:720px;margin:0 auto; }
+    .faq-item { border:1px solid var(--border);border-radius:var(--radius);margin-bottom:1rem;overflow:hidden; }
+    .faq-q { display:flex;align-items:center;justify-content:space-between;padding:1.2rem 1.5rem;cursor:pointer;font-weight:600;transition:var(--transition); }
+    .faq-q:hover { background:rgba(255,255,255,.03); }
+    .faq-q .arrow { transition:var(--transition);font-size:.85rem;color:var(--text-muted); }
+    .faq-a { display:none;padding:0 1.5rem 1.2rem;color:var(--text-muted);line-height:1.7;font-size:.95rem; }
+    .faq-item.open .faq-a { display:block; }
+    .faq-item.open .arrow { transform:rotate(180deg); }
+    .cta-section { padding:5rem 0;text-align:center; }
+    .cta-section h2 { font-family:var(--font-head);font-size:clamp(1.8rem,3vw,2.8rem);font-weight:800;margin-bottom:1rem; }
+    .cta-section p { color:var(--text-muted);margin-bottom:2rem; }
+    @media(max-width:600px){.big-step{grid-template-columns:1fr}.big-step__num{width:52px;height:52px;font-size:1.1rem}.connector{margin-left:25px}}
+  </style>
+</head>
+<body>
+<div id="nav-placeholder"></div>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="section-tag">The Process</div>
+    <h1>How <span class="gradient-text">SkillSphere</span> Works</h1>
+    <p>We make skill exchange simple, transparent, and completely free. Here's everything you need to know.</p>
+  </div>
+</section>
+
+<!-- Step by Step -->
+<section class="hiw-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">3 Simple Steps</div>
+      <h2>From Zero to Exchanging</h2>
+    </div>
+
+    <div class="big-steps">
+
+      <div class="big-step">
+        <div class="big-step__num">1</div>
+        <div class="big-step__content">
+          <h3>Create Your Profile</h3>
+          <p>Sign up in under 2 minutes. Tell the community what skill you can teach and what you'd love to learn in return. The more specific you are, the better your matches will be.</p>
+          <div class="big-step__detail">
+            <div class="detail-row"><span>✅</span> Free account, no credit card</div>
+            <div class="detail-row"><span>✅</span> List multiple skills you can teach</div>
+            <div class="detail-row"><span>✅</span> Specify exactly what you want to learn</div>
+            <div class="detail-row"><span>✅</span> Set your availability and preferred format</div>
+          </div>
+          <div style="margin-top:1.2rem">
+            <a href="register.html" class="btn btn--primary">Create Account →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="connector"></div>
+
+      <div class="big-step">
+        <div class="big-step__num">2</div>
+        <div class="big-step__content">
+          <h3>Find Your Match</h3>
+          <p>Browse our marketplace of skill listings. Filter by category, skill level, format (online or in-person), and more. When you find someone whose offering excites you, send them an exchange request.</p>
+          <div class="big-step__detail">
+            <div class="detail-row"><span>🔍</span> Search by skill name or keyword</div>
+            <div class="detail-row"><span>🏷️</span> Filter by category, level, and format</div>
+            <div class="detail-row"><span>👤</span> View detailed profiles and ratings</div>
+            <div class="detail-row"><span>📨</span> Send an exchange request with one click</div>
+          </div>
+          <div style="margin-top:1.2rem">
+            <a href="explore.html" class="btn btn--outline">Browse Skills →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="connector"></div>
+
+      <div class="big-step">
+        <div class="big-step__num">3</div>
+        <div class="big-step__content">
+          <h3>Exchange & Grow</h3>
+          <p>Once both parties agree, you schedule your sessions — online via Zoom/Meet, or in person. You teach your skill, they teach theirs. After the exchange, both parties leave a rating and review.</p>
+          <div class="big-step__detail">
+            <div class="detail-row"><span>📅</span> Schedule sessions at your convenience</div>
+            <div class="detail-row"><span>🖥️</span> Online or in-person — your choice</div>
+            <div class="detail-row"><span>⭐</span> Rate and review after each exchange</div>
+            <div class="detail-row"><span>🏆</span> Build your reputation on the platform</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Value Props -->
+<section style="padding:5rem 0;background:var(--bg-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Why SkillSphere</div>
+      <h2>The Smarter Way to Learn</h2>
+    </div>
+    <div class="cat-grid">
+      <div class="cat-card"><div class="cat-card__icon">💰</div><h4>100% Free</h4><p>No money changes hands — ever. Pure skill exchange.</p></div>
+      <div class="cat-card"><div class="cat-card__icon">🤝</div><h4>Peer Learning</h4><p>Learn from real practitioners, not just textbooks.</p></div>
+      <div class="cat-card"><div class="cat-card__icon">⭐</div><h4>Rated Community</h4><p>Ratings and reviews keep quality high for everyone.</p></div>
+      <div class="cat-card"><div class="cat-card__icon">🌐</div><h4>Online & In-Person</h4><p>Connect locally or globally — your preference.</p></div>
+      <div class="cat-card"><div class="cat-card__icon">🔒</div><h4>Safe & Trusted</h4><p>Verified profiles and community-driven accountability.</p></div>
+      <div class="cat-card"><div class="cat-card__icon">📈</div><h4>Grow Together</h4><p>Both parties teach AND learn — double the value.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">FAQ</div>
+      <h2>Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Is SkillSphere really free? <span class="arrow">▾</span></div>
+        <div class="faq-a">Yes, completely free. We don't charge for listings, exchanges, or any features. Our mission is to make learning accessible to everyone.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What if I'm a complete beginner? <span class="arrow">▾</span></div>
+        <div class="faq-a">Beginners are very welcome! Many people on SkillSphere specifically look for beginners to teach. Just be honest about your level in your listing.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How many sessions does an exchange involve? <span class="arrow">▾</span></div>
+        <div class="faq-a">That's entirely up to you and your exchange partner. Some do a single 1-hour session, others do ongoing weekly exchanges for months. You negotiate and agree before starting.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What if the exchange doesn't work out? <span class="arrow">▾</span></div>
+        <div class="faq-a">Either party can end the exchange at any time — no obligations. You can then leave an honest review and find a better match through the marketplace.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Can I list more than one skill? <span class="arrow">▾</span></div>
+        <div class="faq-a">Absolutely. You can list as many skills as you want. Many members teach 2-3 skills and find exchange partners for each one independently.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Is it safe to meet in person? <span class="arrow">▾</span></div>
+        <div class="faq-a">We recommend starting with online sessions first to build trust. If you meet in person, always choose a public place for the first session. Use your best judgment.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <div class="section-tag">Get Started</div>
+    <h2>Ready to Start Exchanging?</h2>
+    <p>Join 2,400+ members already teaching and learning on SkillSphere</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+      <a href="register.html" class="btn btn--primary btn--lg">Join Free Today →</a>
+      <a href="explore.html" class="btn btn--outline btn--lg">Browse Skills First</a>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+<script src="js/components.js"></script>
+<script>
+  Components.init();
+  function toggleFaq(el) {
+    el.parentElement.classList.toggle('open');
+  }
+</script>
+</body>
+</html>

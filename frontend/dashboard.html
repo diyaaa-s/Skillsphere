@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard — SkillSphere</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    .dashboard { padding:7rem 0 4rem; }
+    .dash-header { display:flex;align-items:center;justify-content:space-between;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem; }
+    .dash-welcome h1 { font-family:var(--font-head);font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;letter-spacing:-.02em; }
+    .dash-welcome p  { color:var(--text-muted);margin-top:.3rem; }
+    .stats-row { display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:2.5rem; }
+    .stat-card { background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;text-align:center; }
+    .stat-card__icon { font-size:1.8rem;margin-bottom:.5rem; }
+    .stat-card__num { font-family:var(--font-head);font-size:2rem;font-weight:800;color:var(--accent); }
+    .stat-card__label { font-size:.82rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-top:.3rem; }
+    .dash-grid { display:grid;grid-template-columns:2fr 1fr;gap:2rem; }
+    .dash-section-title { font-family:var(--font-head);font-size:1.1rem;font-weight:700;margin-bottom:1.2rem;display:flex;align-items:center;justify-content:space-between; }
+    .dash-section-title a { font-size:.82rem;color:var(--accent);font-weight:500; }
+    .card-box { background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem; }
+    .profile-avatar { width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:800;font-family:var(--font-head);color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent-2));margin:0 auto 1rem;font-size:2rem; }
+    .profile-name { font-family:var(--font-head);font-size:1.2rem;font-weight:800;text-align:center;margin-bottom:.3rem; }
+    .profile-email { font-size:.85rem;color:var(--text-muted);text-align:center;margin-bottom:1.2rem; }
+    .profile-badges { display:flex;flex-direction:column;gap:.5rem; }
+    .profile-badge { display:flex;align-items:center;gap:.75rem;font-size:.85rem;padding:.5rem .75rem;border-radius:var(--radius-sm);background:rgba(255,255,255,.03); }
+    .profile-badge span:first-child { font-size:1rem; }
+    .activity-item { display:flex;align-items:center;gap:1rem;padding:.9rem 0;border-bottom:1px solid var(--border); }
+    .activity-item:last-child { border-bottom:none; }
+    .activity-icon { width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0; }
+    .activity-icon.green { background:rgba(16,185,129,.15);color:var(--green); }
+    .activity-icon.blue  { background:rgba(0,229,255,.12); color:var(--accent); }
+    .activity-icon.purple{ background:rgba(124,58,237,.15);color:#a78bfa; }
+    .activity-text { flex:1;font-size:.88rem; }
+    .activity-time { font-size:.78rem;color:var(--text-muted); }
+    .empty-state { text-align:center;padding:2.5rem;color:var(--text-muted); }
+    .empty-state .empty-icon { font-size:2.5rem;margin-bottom:.75rem; }
+    .tab-bar { display:flex;gap:.5rem;margin-bottom:1.5rem;border-bottom:1px solid var(--border);padding-bottom:0; }
+    .tab-btn { padding:.6rem 1.2rem;border:none;background:none;color:var(--text-muted);font-family:var(--font-body);font-size:.9rem;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:var(--transition); }
+    .tab-btn.active { color:var(--accent);border-bottom-color:var(--accent); }
+    .tab-panel { display:none; }
+    .tab-panel.active { display:block; }
+    .skill-row { display:flex;align-items:center;gap:1rem;padding:.9rem 0;border-bottom:1px solid var(--border); }
+    .skill-row:last-child { border-bottom:none; }
+    .skill-row__info { flex:1; }
+    .skill-row__title { font-weight:600;font-size:.92rem;margin-bottom:.2rem; }
+    .skill-row__sub   { font-size:.8rem;color:var(--text-muted); }
+    .badge { display:inline-flex;align-items:center;padding:.25rem .65rem;border-radius:999px;font-size:.73rem;font-weight:600; }
+    .badge-active { background:rgba(16,185,129,.12);color:var(--green); }
+    .badge-pending { background:rgba(245,158,11,.12);color:var(--accent-3); }
+    @media(max-width:900px){.dash-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div id="nav-placeholder"></div>
+
+<section class="dashboard">
+  <div class="container">
+
+    <!-- Header -->
+    <div class="dash-header">
+      <div class="dash-welcome">
+        <h1>Welcome back, <span class="gradient-text" id="userName">...</span> 👋</h1>
+        <p id="userSubtitle">Here's what's happening on your SkillSphere</p>
+      </div>
+      <div style="display:flex;gap:.75rem">
+        <a href="list-skill.html" class="btn btn--primary">+ List a Skill</a>
+        <a href="explore.html" class="btn btn--ghost">Browse Skills</a>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-card__icon">🤝</div>
+        <div class="stat-card__num" id="statExchanges">0</div>
+        <div class="stat-card__label">Total Exchanges</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__icon">⭐</div>
+        <div class="stat-card__num" id="statRating">—</div>
+        <div class="stat-card__label">Avg Rating</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__icon">📋</div>
+        <div class="stat-card__num" id="statSkills">0</div>
+        <div class="stat-card__label">Skills Listed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__icon">👥</div>
+        <div class="stat-card__num">2,400+</div>
+        <div class="stat-card__label">Community Members</div>
+      </div>
+    </div>
+
+    <!-- Main Grid -->
+    <div class="dash-grid">
+
+      <!-- Left Column -->
+      <div>
+        <!-- Tabs -->
+        <div class="card-box">
+          <div class="tab-bar">
+            <button class="tab-btn active" onclick="switchTab('activity', this)">📅 Recent Activity</button>
+            <button class="tab-btn" onclick="switchTab('myskills', this)">📋 My Skills</button>
+            <button class="tab-btn" onclick="switchTab('requests', this)">📬 Requests</button>
+          </div>
+
+          <!-- Activity Tab -->
+          <div class="tab-panel active" id="tab-activity">
+            <div class="activity-item">
+              <div class="activity-icon green">✓</div>
+              <div class="activity-text"><strong>Exchange completed</strong> with Kavya Reddy<br><span style="font-size:.82rem;color:var(--text-muted)">Python ↔ Guitar · 3 sessions</span></div>
+              <span class="activity-time">2h ago</span>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon blue">📨</div>
+              <div class="activity-text"><strong>New request</strong> from Vikram Nair<br><span style="font-size:.82rem;color:var(--text-muted)">Wants: your skill · Offers: Guitar lessons</span></div>
+              <span class="activity-time">5h ago</span>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon purple">⭐</div>
+              <div class="activity-text"><strong>You received a 5★ review</strong><br><span style="font-size:.82rem;color:var(--text-muted)">"Amazing teacher, super patient!"</span></div>
+              <span class="activity-time">1d ago</span>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon green">🎯</div>
+              <div class="activity-text"><strong>Profile viewed</strong> 12 times this week</div>
+              <span class="activity-time">2d ago</span>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon blue">✨</div>
+              <div class="activity-text"><strong>Joined SkillSphere</strong> — welcome aboard!</div>
+              <span class="activity-time">recently</span>
+            </div>
+          </div>
+
+          <!-- My Skills Tab -->
+          <div class="tab-panel" id="tab-myskills">
+            <div id="mySkillsList">
+              <div class="empty-state">
+                <div class="empty-icon">📋</div>
+                <p>You haven't listed any skills yet</p>
+                <a href="list-skill.html" class="btn btn--primary" style="margin-top:1rem;display:inline-flex">+ List Your First Skill</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Requests Tab -->
+          <div class="tab-panel" id="tab-requests">
+            <div class="skill-row">
+              <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#00e5ff,#7c3aed);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:.85rem">VN</div>
+              <div class="skill-row__info">
+                <div class="skill-row__title">Vikram Nair wants to exchange</div>
+                <div class="skill-row__sub">Offers: Guitar · Wants: Your skill</div>
+              </div>
+              <div style="display:flex;gap:.5rem">
+                <button class="btn btn--primary" style="padding:.4rem .9rem;font-size:.82rem" onclick="showToast('Request accepted! 🎉','success')">Accept</button>
+                <button class="btn btn--ghost" style="padding:.4rem .9rem;font-size:.82rem" onclick="showToast('Request declined','error')">Decline</button>
+              </div>
+            </div>
+            <div class="skill-row">
+              <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#ef4444);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:.85rem">MI</div>
+              <div class="skill-row__info">
+                <div class="skill-row__title">Meera Iyer wants to exchange</div>
+                <div class="skill-row__sub">Offers: Yoga · Wants: Your skill</div>
+              </div>
+              <span class="badge badge-pending">Pending</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column — Profile Card -->
+      <div>
+        <div class="card-box">
+          <div class="dash-section-title">My Profile <a href="profile.html">Edit →</a></div>
+          <div class="profile-avatar" id="profileAvatar">?</div>
+          <div class="profile-name" id="profileName">Loading...</div>
+          <div class="profile-email" id="profileEmail">—</div>
+          <div class="profile-badges" id="profileBadges"></div>
+          <a href="profile.html" class="btn btn--ghost btn--full" style="margin-top:1.2rem;justify-content:center">View Full Profile</a>
+        </div>
+
+        <div class="card-box">
+          <div class="dash-section-title">Quick Actions</div>
+          <div style="display:flex;flex-direction:column;gap:.6rem">
+            <a href="list-skill.html" class="btn btn--primary btn--full" style="justify-content:center">+ List a New Skill</a>
+            <a href="explore.html" class="btn btn--ghost btn--full" style="justify-content:center">🔍 Browse Skills</a>
+            <a href="profile.html" class="btn btn--ghost btn--full" style="justify-content:center">✏️ Edit Profile</a>
+          </div>
+        </div>
+
+        <div class="card-box">
+          <div class="dash-section-title">Platform Tips</div>
+          <div style="display:flex;flex-direction:column;gap:.75rem;font-size:.88rem;color:var(--text-muted)">
+            <div>💡 Complete your profile to get <strong style="color:var(--text)">3x more</strong> exchange requests</div>
+            <div>🎯 Add specific skill details so people know exactly what you offer</div>
+            <div>⭐ Respond to requests quickly to build your reputation</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+<script src="js/components.js"></script>
+<script>
+  Components.init();
+
+  // Require auth
+  if (!Auth.requireAuth()) {}
+
+  // Load user data
+  const user = Auth.getUser();
+  if (user) {
+    document.getElementById('userName').textContent = user.firstName;
+    document.getElementById('userSubtitle').textContent = `${user.teach} teacher · Learning ${user.learn}`;
+    document.getElementById('profileAvatar').textContent = (user.firstName[0] + user.lastName[0]).toUpperCase();
+    document.getElementById('profileName').textContent = user.firstName + ' ' + user.lastName;
+    document.getElementById('profileEmail').textContent = user.email;
+    document.getElementById('statExchanges').textContent = user.exchanges || 0;
+    document.getElementById('statRating').textContent = user.rating ? user.rating.toFixed(1) : '—';
+    document.getElementById('profileBadges').innerHTML = `
+      <div class="profile-badge"><span>📚</span><span>Teaches: ${user.teach}</span></div>
+      <div class="profile-badge"><span>🎯</span><span>Wants: ${user.learn}</span></div>
+      <div class="profile-badge"><span>🏷️</span><span>Category: ${getCategoryLabel(user.category || 'other')}</span></div>
+    `;
+  }
+
+  function switchTab(name, btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + name).classList.add('active');
+  }
+</script>
+</body>
+</html>

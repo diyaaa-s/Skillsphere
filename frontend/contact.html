@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact — SkillSphere</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    .page-hero{padding:7rem 0 4rem;text-align:center;background:var(--bg-2);border-bottom:1px solid var(--border)}
+    .page-hero h1{font-family:var(--font-head);font-size:clamp(2rem,5vw,3rem);font-weight:800;letter-spacing:-.02em;margin-bottom:1rem}
+    .contact-layout{display:grid;grid-template-columns:1fr 1.4fr;gap:3rem;padding:5rem 0;max-width:1000px;margin:0 auto}
+    .contact-info h3{font-family:var(--font-head);font-size:1.3rem;font-weight:800;margin-bottom:.75rem}
+    .contact-info p{color:var(--text-muted);line-height:1.7;margin-bottom:2rem}
+    .contact-item{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.5rem}
+    .contact-item__icon{width:44px;height:44px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.2)}
+    .contact-item__label{font-weight:600;font-size:.9rem;margin-bottom:.2rem}
+    .contact-item__val{font-size:.88rem;color:var(--text-muted)}
+    .contact-form-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:2rem}
+    .contact-form-card h3{font-family:var(--font-head);font-size:1.2rem;font-weight:800;margin-bottom:1.5rem}
+    @media(max-width:700px){.contact-layout{grid-template-columns:1fr;padding:3rem 0}}
+  </style>
+</head>
+<body>
+<div id="nav-placeholder"></div>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="section-tag">Get In Touch</div>
+    <h1>Contact <span class="gradient-text">Us</span></h1>
+    <p style="color:var(--text-muted);max-width:480px;margin:0 auto">Have a question, suggestion, or want to report an issue? We're here to help.</p>
+  </div>
+</section>
+
+<div class="container">
+  <div class="contact-layout">
+    <!-- Left -->
+    <div class="contact-info">
+      <h3>We'd love to hear from you</h3>
+      <p>SkillSphere is built by students, for everyone. Your feedback directly shapes what we build next. Don't hesitate to reach out.</p>
+
+      <div class="contact-item">
+        <div class="contact-item__icon">📧</div>
+        <div>
+          <div class="contact-item__label">Email Us</div>
+          <div class="contact-item__val">hello@skillsphere.dev</div>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-item__icon">💬</div>
+        <div>
+          <div class="contact-item__label">Response Time</div>
+          <div class="contact-item__val">Usually within 24-48 hours</div>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-item__icon">🐙</div>
+        <div>
+          <div class="contact-item__label">GitHub</div>
+          <div class="contact-item__val">github.com/your-username/skillsphere</div>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-item__icon">📍</div>
+        <div>
+          <div class="contact-item__label">Built In</div>
+          <div class="contact-item__val">India 🇮🇳 — DevOps Project 2024</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right -->
+    <div class="contact-form-card">
+      <h3>Send a Message</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" id="cfFirstName" placeholder="Arjun"/>
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" id="cfLastName" placeholder="Mehta"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="cfEmail" placeholder="you@example.com"/>
+      </div>
+      <div class="form-group">
+        <label>Subject</label>
+        <select id="cfSubject">
+          <option value="">Select a topic</option>
+          <option>General Question</option>
+          <option>Report an Issue</option>
+          <option>Feature Request</option>
+          <option>Partnership</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea id="cfMessage" placeholder="Write your message here..." style="min-height:130px"></textarea>
+      </div>
+      <div id="cfError" class="form-error"></div>
+      <div id="cfSuccess" class="form-success"></div>
+      <button class="btn btn--primary btn--full" id="cfBtn" onclick="sendMessage()">Send Message →</button>
+    </div>
+  </div>
+</div>
+
+<div id="footer-placeholder"></div>
+<script src="js/components.js"></script>
+<script>
+  Components.init();
+
+  function sendMessage() {
+    const firstName = document.getElementById('cfFirstName').value.trim();
+    const email     = document.getElementById('cfEmail').value.trim();
+    const message   = document.getElementById('cfMessage').value.trim();
+    const errEl     = document.getElementById('cfError');
+    const succEl    = document.getElementById('cfSuccess');
+    const btn       = document.getElementById('cfBtn');
+    errEl.textContent = ''; succEl.textContent = '';
+
+    if (!firstName || !email || !message) { errEl.textContent = 'Please fill in all required fields.'; return; }
+    if (!isValidEmail(email)) { errEl.textContent = 'Please enter a valid email.'; return; }
+
+    btn.textContent = 'Sending...'; btn.disabled = true;
+    setTimeout(() => {
+      succEl.textContent = '✅ Message sent! We\'ll get back to you within 48 hours.';
+      btn.textContent = 'Send Message →'; btn.disabled = false;
+      ['cfFirstName','cfLastName','cfEmail','cfSubject','cfMessage'].forEach(id => document.getElementById(id).value = '');
+    }, 1200);
+  }
+</script>
+</body>
+</html>

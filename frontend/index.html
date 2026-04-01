@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SkillSphere — Skill Exchange Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="navbar">
+    <div class="nav__logo">
+      <span class="logo-icon">◎</span>
+      <span>SkillSphere</span>
+    </div>
+    <ul class="nav__links">
+      <li><a href="#skills">Explore</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#skills">Skills</a></li>
+    </ul>
+    <div class="nav__actions">
+      <a href="login.html" class="btn btn--ghost">Log In</a>
+      <a href="register.html" class="btn btn--primary">Join Free</a>
+    </div>
+    <button class="hamburger" onclick="toggleMobileNav()">☰</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero__bg">
+      <div class="orb orb--1"></div>
+      <div class="orb orb--2"></div>
+      <div class="orb orb--3"></div>
+      <div class="grid-lines"></div>
+    </div>
+    <div class="hero__content">
+      <div class="hero__badge">🌐 100% Free Skill Exchange</div>
+      <h1 class="hero__title">
+        Trade Skills,<br/>
+        <span class="gradient-text">Grow Together</span>
+      </h1>
+      <p class="hero__sub">SkillSphere connects people who want to teach with people who want to learn — no money, just skills. You teach what you know. You learn what you need.</p>
+      <div class="hero__cta">
+        <a href="register.html" class="btn btn--primary btn--lg">
+          Start Exchanging ↗
+        </a>
+        <button class="btn btn--outline btn--lg" onclick="scrollTo('#skills')">
+          Browse Skills
+        </button>
+      </div>
+      <div class="hero__stats">
+        <div class="stat"><span class="stat__num" data-target="2400">0</span><span class="stat__label">Members</span></div>
+        <div class="stat__divider"></div>
+        <div class="stat"><span class="stat__num" data-target="180">0</span><span class="stat__label">Skills Listed</span></div>
+        <div class="stat__divider"></div>
+        <div class="stat"><span class="stat__num" data-target="940">0</span><span class="stat__label">Exchanges Made</span></div>
+      </div>
+    </div>
+    <div class="hero__cards">
+      <div class="float-card float-card--1">
+        <div class="float-card__avatar">🎸</div>
+        <div>
+          <div class="float-card__name">Arjun M.</div>
+          <div class="float-card__text">Teaches Guitar → Learns Python</div>
+        </div>
+      </div>
+      <div class="float-card float-card--2">
+        <div class="float-card__avatar">📐</div>
+        <div>
+          <div class="float-card__name">Priya S.</div>
+          <div class="float-card__text">Teaches UI Design → Learns Spanish</div>
+        </div>
+      </div>
+      <div class="float-card float-card--3">
+        <div class="float-card__avatar">🧘</div>
+        <div>
+          <div class="float-card__name">Rahul K.</div>
+          <div class="float-card__text">Teaches Yoga → Learns Photography</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how" id="how">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Process</div>
+        <h2>How SkillSphere Works</h2>
+        <p>Simple three-step process to start exchanging skills today</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step__num">01</div>
+          <div class="step__icon">📝</div>
+          <h3>Create Your Profile</h3>
+          <p>List the skills you can teach and what you'd love to learn. Add your experience level and availability.</p>
+        </div>
+        <div class="step__arrow">→</div>
+        <div class="step">
+          <div class="step__num">02</div>
+          <div class="step__icon">🔍</div>
+          <h3>Find Your Match</h3>
+          <p>Browse skill listings, filter by category, and discover people whose offerings match your needs.</p>
+        </div>
+        <div class="step__arrow">→</div>
+        <div class="step">
+          <div class="step__num">03</div>
+          <div class="step__icon">🤝</div>
+          <h3>Exchange & Grow</h3>
+          <p>Connect, schedule sessions, and grow together. Rate your experience and build your reputation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS MARKETPLACE -->
+  <section class="skills-section" id="skills">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Marketplace</div>
+        <h2>Explore Skill Listings</h2>
+        <p>Discover hundreds of skills being exchanged right now</p>
+      </div>
+
+      <!-- Search & Filter -->
+      <div class="search-bar">
+        <div class="search-input-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="searchInput" placeholder="Search skills, e.g. Python, Music, Design..." oninput="filterSkills()"/>
+        </div>
+        <div class="category-filters" id="categoryFilters">
+          <button class="filter-btn active" onclick="filterByCategory('all', this)">All</button>
+          <button class="filter-btn" onclick="filterByCategory('tech', this)">💻 Tech</button>
+          <button class="filter-btn" onclick="filterByCategory('creative', this)">🎨 Creative</button>
+          <button class="filter-btn" onclick="filterByCategory('music', this)">🎵 Music</button>
+          <button class="filter-btn" onclick="filterByCategory('language', this)">🌍 Language</button>
+          <button class="filter-btn" onclick="filterByCategory('fitness', this)">💪 Fitness</button>
+          <button class="filter-btn" onclick="filterByCategory('business', this)">📊 Business</button>
+        </div>
+      </div>
+
+      <!-- Skill Cards Grid -->
+      <div class="skills-grid" id="skillsGrid">
+        <!-- Populated by JS -->
+      </div>
+
+      <div class="skills-cta">
+        <a href="register.html" class="btn btn--primary btn--lg">
+  +        List Your Skill
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="categories">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Explore</div>
+        <h2>Browse by Category</h2>
+      </div>
+      <div class="cat-grid">
+        <div class="cat-card" onclick="filterByCategory('tech', null); scrollTo('#skills')">
+          <div class="cat-card__icon">💻</div>
+          <h4>Technology</h4>
+          <p>Python, Web Dev, AI/ML, Databases</p>
+          <span class="cat-card__count">42 skills</span>
+        </div>
+        <div class="cat-card" onclick="filterByCategory('creative', null); scrollTo('#skills')">
+          <div class="cat-card__icon">🎨</div>
+          <h4>Creative Arts</h4>
+          <p>Design, Photography, Writing, Video</p>
+          <span class="cat-card__count">38 skills</span>
+        </div>
+        <div class="cat-card" onclick="filterByCategory('music', null); scrollTo('#skills')">
+          <div class="cat-card__icon">🎵</div>
+          <h4>Music</h4>
+          <p>Guitar, Piano, Production, Vocals</p>
+          <span class="cat-card__count">27 skills</span>
+        </div>
+        <div class="cat-card" onclick="filterByCategory('language', null); scrollTo('#skills')">
+          <div class="cat-card__icon">🌍</div>
+          <h4>Languages</h4>
+          <p>Spanish, French, Japanese, Hindi</p>
+          <span class="cat-card__count">31 skills</span>
+        </div>
+        <div class="cat-card" onclick="filterByCategory('fitness', null); scrollTo('#skills')">
+          <div class="cat-card__icon">💪</div>
+          <h4>Fitness & Wellness</h4>
+          <p>Yoga, Nutrition, Meditation, Sport</p>
+          <span class="cat-card__count">19 skills</span>
+        </div>
+        <div class="cat-card" onclick="filterByCategory('business', null); scrollTo('#skills')">
+          <div class="cat-card__icon">📊</div>
+          <h4>Business</h4>
+          <p>Marketing, Finance, Leadership, Sales</p>
+          <span class="cat-card__count">23 skills</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Stories</div>
+        <h2>Real Exchanges, Real Impact</h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-card__quote">"I taught Priya web development for 3 months and she helped me design my entire portfolio. Best deal ever."</div>
+          <div class="testimonial-card__author">
+            <div class="testimonial-card__avatar">AK</div>
+            <div>
+              <div class="testimonial-card__name">Aditya Kumar</div>
+              <div class="testimonial-card__role">Web Dev ↔ UI Design</div>
+            </div>
+          </div>
+          <div class="stars">★★★★★</div>
+        </div>
+        <div class="testimonial-card testimonial-card--featured">
+          <div class="testimonial-card__quote">"SkillSphere completely changed how I think about learning. I speak conversational Spanish now and my exchange partner runs their own fitness business."</div>
+          <div class="testimonial-card__author">
+            <div class="testimonial-card__avatar">SN</div>
+            <div>
+              <div class="testimonial-card__name">Sneha Nair</div>
+              <div class="testimonial-card__role">Yoga Coach ↔ Spanish</div>
+            </div>
+          </div>
+          <div class="stars">★★★★★</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-card__quote">"Found my music production partner here. We've co-released 2 tracks and we're still learning from each other!"</div>
+          <div class="testimonial-card__author">
+            <div class="testimonial-card__avatar">RM</div>
+            <div>
+              <div class="testimonial-card__name">Rohan Mehta</div>
+              <div class="testimonial-card__role">Guitar ↔ Music Production</div>
+            </div>
+          </div>
+          <div class="stars">★★★★★</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <div class="nav__logo" style="margin-bottom:1rem">
+            <span class="logo-icon">◎</span>
+            <span>SkillSphere</span>
+          </div>
+          <p>A community-driven skill exchange platform. Teach what you know. Learn what you need.</p>
+        </div>
+        <div class="footer__links">
+          <div>
+            <h5>Platform</h5>
+            <a href="#">Browse Skills</a>
+            <a href="#">How It Works</a>
+            <a href="#">List a Skill</a>
+          </div>
+          <div>
+            <h5>Company</h5>
+            <a href="#">About</a>
+            <a href="#">Blog</a>
+            <a href="#">Contact</a>
+          </div>
+          <div>
+            <h5>Legal</h5>
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="#">Cookies</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>© 2024 SkillSphere. Built with ❤️ for the DevOps Project.</p>
+        <p>Powered by Node.js · MongoDB · Docker</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SKILL DETAIL MODAL -->
+  <div class="modal-overlay" id="skillModal" onclick="closeModal('skillModal')">
+    <div class="modal" onclick="event.stopPropagation()">
+      <button class="modal__close" onclick="closeModal('skillModal')">✕</button>
+      <div id="skillModalContent"></div>
+    </div>
+  </div>
+
+  <!-- LOGIN MODAL -->
+  <div class="modal-overlay" id="loginModal" onclick="closeModal('loginModal')">
+    <div class="modal modal--auth" onclick="event.stopPropagation()">
+      <button class="modal__close" onclick="closeModal('loginModal')">✕</button>
+      <div class="auth-modal">
+        <div class="auth-modal__logo"><span class="logo-icon">◎</span> SkillSphere</div>
+        <h2>Welcome Back</h2>
+        <p>Log in to your account</p>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="loginEmail" placeholder="you@example.com" />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="loginPassword" placeholder="••••••••" />
+        </div>
+        <div id="loginError" class="form-error"></div>
+        <button class="btn btn--primary btn--full" onclick="handleLogin()">Log In →</button>
+        <p class="auth-switch">Don't have an account? <a href="#" onclick="switchModal('loginModal','registerModal')">Sign up free</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- REGISTER MODAL -->
+  <div class="modal-overlay" id="registerModal" onclick="closeModal('registerModal')">
+    <div class="modal modal--auth" onclick="event.stopPropagation()">
+      <button class="modal__close" onclick="closeModal('registerModal')">✕</button>
+      <div class="auth-modal">
+        <div class="auth-modal__logo"><span class="logo-icon">◎</span> SkillSphere</div>
+        <h2>Join SkillSphere</h2>
+        <p>Create your free account</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" id="regFirstName" placeholder="Arjun" />
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" id="regLastName" placeholder="Mehta" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="regEmail" placeholder="you@example.com" />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="regPassword" placeholder="Create a password" />
+        </div>
+        <div class="form-group">
+          <label>I can teach...</label>
+          <input type="text" id="regTeach" placeholder="e.g. Python, Guitar, Yoga..." />
+        </div>
+        <div class="form-group">
+          <label>I want to learn...</label>
+          <input type="text" id="regLearn" placeholder="e.g. Spanish, Design, Finance..." />
+        </div>
+        <div id="registerError" class="form-error"></div>
+        <div id="registerSuccess" class="form-success"></div>
+        <button class="btn btn--primary btn--full" onclick="handleRegister()">Create Account →</button>
+        <p class="auth-switch">Already a member? <a href="#" onclick="switchModal('registerModal','loginModal')">Log in</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script src="js/app.js"></script>
+  <script src="js/components.js"></script>
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Explore Skills — SkillSphere</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    .page-hero { padding:7rem 0 3rem;background:var(--bg-2);border-bottom:1px solid var(--border);text-align:center; }
+    .page-hero h1 { font-family:var(--font-head);font-size:clamp(2rem,4vw,3rem);font-weight:800;letter-spacing:-.02em;margin-bottom:.75rem; }
+    .page-hero p { color:var(--text-muted);font-size:1.05rem; }
+    .explore-layout { display:grid;grid-template-columns:260px 1fr;gap:2rem;padding:3rem 0; }
+    .sidebar { position:sticky;top:90px;height:fit-content; }
+    .sidebar-card { background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem; }
+    .sidebar-card h4 { font-family:var(--font-head);font-size:.9rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin-bottom:1rem; }
+    .sidebar-option { display:flex;align-items:center;gap:.75rem;padding:.6rem .8rem;border-radius:var(--radius-sm);cursor:pointer;transition:var(--transition);font-size:.9rem;color:var(--text-muted); }
+    .sidebar-option:hover,.sidebar-option.active { background:rgba(0,229,255,.08);color:var(--accent); }
+    .sidebar-option input[type=radio] { display:none; }
+    .explore-main {}
+    .search-row { display:flex;gap:1rem;margin-bottom:1.5rem; }
+    .search-row .search-input-wrap { flex:1; }
+    .results-header { display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem; }
+    .results-count { font-size:.9rem;color:var(--text-muted); }
+    .sort-select { background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.5rem 1rem;color:var(--text);font-family:var(--font-body);font-size:.88rem;cursor:pointer; }
+    .skills-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem; }
+    .load-more { text-align:center;margin-top:2.5rem; }
+    /* Skill modal */
+    .modal-overlay{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;pointer-events:none;transition:var(--transition)}
+    .modal-overlay.active{opacity:1;pointer-events:all}
+    .modal{background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:2.5rem;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;position:relative;transform:translateY(20px);transition:var(--transition);box-shadow:0 20px 60px rgba(0,0,0,.6)}
+    .modal-overlay.active .modal{transform:translateY(0)}
+    .modal__close{position:absolute;top:1.2rem;right:1.2rem;background:rgba(255,255,255,.06);border:none;color:var(--text);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;transition:var(--transition)}
+    .modal__close:hover{background:rgba(255,255,255,.12)}
+    .skill-detail__header{display:flex;align-items:center;gap:1.2rem;margin-bottom:1.5rem}
+    .skill-detail__avatar{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:700;color:#fff;font-family:var(--font-head)}
+    .skill-detail__grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+    .skill-detail__item label{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);display:block;margin-bottom:.3rem}
+    .skill-detail__item p{font-weight:500}
+    .skill-detail__bio{color:var(--text-muted);font-size:.95rem;line-height:1.7;margin-bottom:1.5rem}
+    @media(max-width:768px){.explore-layout{grid-template-columns:1fr}.sidebar{position:static;display:grid;grid-template-columns:1fr 1fr;gap:1rem}}
+    @media(max-width:480px){.sidebar{grid-template-columns:1fr}.search-row{flex-direction:column}.skill-detail__grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div id="nav-placeholder"></div>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="section-tag">Marketplace</div>
+    <h1>Explore <span class="gradient-text">Skill Listings</span></h1>
+    <p>Discover people to exchange skills with — teach what you know, learn what you need</p>
+  </div>
+</section>
+
+<div class="container">
+  <div class="explore-layout">
+
+    <!-- Sidebar Filters -->
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <h4>Category</h4>
+        <label class="sidebar-option active" onclick="setCategory('all', this)">
+          <span>🌐</span> All Categories
+        </label>
+        <label class="sidebar-option" onclick="setCategory('tech', this)">
+          <span>💻</span> Technology
+        </label>
+        <label class="sidebar-option" onclick="setCategory('creative', this)">
+          <span>🎨</span> Creative Arts
+        </label>
+        <label class="sidebar-option" onclick="setCategory('music', this)">
+          <span>🎵</span> Music
+        </label>
+        <label class="sidebar-option" onclick="setCategory('language', this)">
+          <span>🌍</span> Languages
+        </label>
+        <label class="sidebar-option" onclick="setCategory('fitness', this)">
+          <span>💪</span> Fitness
+        </label>
+        <label class="sidebar-option" onclick="setCategory('business', this)">
+          <span>📊</span> Business
+        </label>
+      </div>
+
+      <div class="sidebar-card">
+        <h4>Level</h4>
+        <label class="sidebar-option active" onclick="setLevel('all', this)">All Levels</label>
+        <label class="sidebar-option" onclick="setLevel('Beginner', this)">Beginner</label>
+        <label class="sidebar-option" onclick="setLevel('Intermediate', this)">Intermediate</label>
+        <label class="sidebar-option" onclick="setLevel('Advanced', this)">Advanced</label>
+        <label class="sidebar-option" onclick="setLevel('Expert', this)">Expert</label>
+      </div>
+
+      <div class="sidebar-card">
+        <h4>Format</h4>
+        <label class="sidebar-option active" onclick="setFormat('all', this)">Any Format</label>
+        <label class="sidebar-option" onclick="setFormat('online', this)">🖥️ Online</label>
+        <label class="sidebar-option" onclick="setFormat('in-person', this)">🤝 In-Person</label>
+        <label class="sidebar-option" onclick="setFormat('both', this)">✨ Both</label>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="explore-main">
+      <div class="search-row">
+        <div class="search-input-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="searchInput" placeholder="Search skills, e.g. Python, Guitar..." oninput="debounceSearch()"/>
+        </div>
+        <button class="btn btn--primary" onclick="applyFilters()">Search</button>
+      </div>
+
+      <div class="results-header">
+        <span class="results-count" id="resultsCount">Loading...</span>
+        <select class="sort-select" id="sortSelect" onchange="applyFilters()">
+          <option value="newest">Newest First</option>
+          <option value="rating">Top Rated</option>
+          <option value="exchanges">Most Exchanges</option>
+        </select>
+      </div>
+
+      <div class="skills-grid" id="skillsGrid">
+        <!-- Populated by JS -->
+      </div>
+
+      <div class="load-more" id="loadMore" style="display:none">
+        <button class="btn btn--ghost btn--lg" onclick="loadNextPage()">Load More Skills</button>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Skill Detail Modal -->
+<div class="modal-overlay" id="skillModal" onclick="closeModal()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="modal__close" onclick="closeModal()">✕</button>
+    <div id="skillModalContent"></div>
+  </div>
+</div>
+
+<div id="footer-placeholder"></div>
+<script src="js/components.js"></script>
+<script>
+
+// ===== STATIC SKILL DATA (used when backend is not available) =====
+const STATIC_SKILLS = [
+  { _id:'1', name:"Kavya Reddy",    initials:"KR", color:"linear-gradient(135deg,#00e5ff,#7c3aed)", teach:"Python & Machine Learning", learn:"Guitar",           category:"tech",     rating:4.9, exchanges:23, level:"Advanced",      bio:"Software engineer with 4 years in Python & ML. Can teach everything from basics to neural networks.", format:"online" },
+  { _id:'2', name:"Vikram Nair",    initials:"VN", color:"linear-gradient(135deg,#7c3aed,#a78bfa)", teach:"Guitar & Music Theory",     learn:"Web Development",  category:"music",    rating:4.8, exchanges:17, level:"Intermediate",  bio:"Self-taught guitarist for 8 years. Knows classical, blues, and contemporary styles.", format:"both" },
+  { _id:'3', name:"Shreya Menon",   initials:"SM", color:"linear-gradient(135deg,#f59e0b,#f97316)", teach:"UI/UX Design",              learn:"Python",           category:"creative", rating:5.0, exchanges:31, level:"Expert",        bio:"Product designer at a startup. Figma expert, design systems, user research.", format:"online" },
+  { _id:'4', name:"Arjun Patel",    initials:"AP", color:"linear-gradient(135deg,#10b981,#06b6d4)", teach:"Spanish (Conversational)",  learn:"Yoga",             category:"language", rating:4.7, exchanges:12, level:"Fluent",        bio:"Lived in Madrid for 2 years. Conversational fluency, grammar basics, and travel Spanish.", format:"both" },
+  { _id:'5', name:"Meera Iyer",     initials:"MI", color:"linear-gradient(135deg,#ef4444,#f97316)", teach:"Hatha Yoga",                learn:"Photography",      category:"fitness",  rating:4.9, exchanges:28, level:"Certified",     bio:"Certified Hatha yoga teacher with 5 years experience. Online or in-person in Bangalore.", format:"both" },
+  { _id:'6', name:"Rohan Sharma",   initials:"RS", color:"linear-gradient(135deg,#f59e0b,#eab308)", teach:"Photography & Editing",     learn:"Digital Marketing",category:"creative", rating:4.6, exchanges:9,  level:"Professional",  bio:"Wedding & travel photographer. Adobe Lightroom, composition, and lighting.", format:"in-person" },
+  { _id:'7', name:"Deepa Thomas",   initials:"DT", color:"linear-gradient(135deg,#06b6d4,#3b82f6)", teach:"French (A1-B1)",            learn:"Graphic Design",   category:"language", rating:4.8, exchanges:15, level:"B2",            bio:"French literature graduate. Teach pronunciation, grammar, and conversational French.", format:"online" },
+  { _id:'8', name:"Kiran Verma",    initials:"KV", color:"linear-gradient(135deg,#8b5cf6,#6d28d9)", teach:"Financial Planning",        learn:"Music Production", category:"business", rating:4.7, exchanges:20, level:"Professional",  bio:"CA by profession. Personal finance, investment basics, tax planning, mutual funds.", format:"both" },
+  { _id:'9', name:"Ananya Das",     initials:"AD", color:"linear-gradient(135deg,#00e5ff,#3b82f6)", teach:"React & JavaScript",        learn:"French",           category:"tech",     rating:4.9, exchanges:26, level:"Advanced",      bio:"Frontend developer 3yr exp. React, hooks, TypeScript, REST APIs. Project-based learning.", format:"online" },
+  { _id:'10',name:"Suresh Kumar",   initials:"SK", color:"linear-gradient(135deg,#a78bfa,#7c3aed)", teach:"Tabla & Indian Classical",  learn:"Web Development",  category:"music",    rating:4.8, exchanges:11, level:"Expert",        bio:"Tabla player for 12 years. Hindustani classical rhythm, beginner to intermediate.", format:"in-person" },
+  { _id:'11',name:"Pooja Nambiar",  initials:"PN", color:"linear-gradient(135deg,#10b981,#84cc16)", teach:"Nutrition & Meal Planning", learn:"Coding",           category:"fitness",  rating:4.6, exchanges:8,  level:"Certified",     bio:"Sports nutritionist. Build balanced meal plans, understand macros, performance nutrition.", format:"online" },
+  { _id:'12',name:"Ravi Krishnan",  initials:"RK", color:"linear-gradient(135deg,#f59e0b,#ef4444)", teach:"Digital Marketing & SEO",   learn:"Yoga",             category:"business", rating:4.7, exchanges:19, level:"Expert",        bio:"7 years in digital marketing. SEO, Google Ads, social media strategy, content marketing.", format:"both" },
+];
+
+let allSkills = [...STATIC_SKILLS];
+let filtered  = [...STATIC_SKILLS];
+let activeCategory = 'all';
+let activeLevel    = 'all';
+let activeFormat   = 'all';
+let currentPage    = 1;
+const PER_PAGE     = 6;
+let searchTimer;
+
+function debounceSearch() {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(applyFilters, 300);
+}
+
+function setCategory(val, el) {
+  activeCategory = val;
+  document.querySelectorAll('.sidebar-card:nth-child(1) .sidebar-option').forEach(e => e.classList.remove('active'));
+  el.classList.add('active');
+  applyFilters();
+}
+function setLevel(val, el) {
+  activeLevel = val;
+  document.querySelectorAll('.sidebar-card:nth-child(2) .sidebar-option').forEach(e => e.classList.remove('active'));
+  el.classList.add('active');
+  applyFilters();
+}
+function setFormat(val, el) {
+  activeFormat = val;
+  document.querySelectorAll('.sidebar-card:nth-child(3) .sidebar-option').forEach(e => e.classList.remove('active'));
+  el.classList.add('active');
+  applyFilters();
+}
+
+function applyFilters() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const sort = document.getElementById('sortSelect').value;
+
+  filtered = allSkills.filter(s => {
+    const matchCat    = activeCategory === 'all' || s.category === activeCategory;
+    const matchLevel  = activeLevel === 'all'    || s.level === activeLevel;
+    const matchFormat = activeFormat === 'all'   || s.format === activeFormat;
+    const matchSearch = !q || s.teach.toLowerCase().includes(q) || s.learn.toLowerCase().includes(q) || s.name.toLowerCase().includes(q);
+    return matchCat && matchLevel && matchFormat && matchSearch;
+  });
+
+  if (sort === 'rating')    filtered.sort((a,b) => b.rating - a.rating);
+  if (sort === 'exchanges') filtered.sort((a,b) => b.exchanges - a.exchanges);
+
+  currentPage = 1;
+  renderSkills();
+}
+
+function renderSkills() {
+  const grid = document.getElementById('skillsGrid');
+  const count = document.getElementById('resultsCount');
+  const loadMoreBtn = document.getElementById('loadMore');
+
+  const page = filtered.slice(0, currentPage * PER_PAGE);
+  count.textContent = `${filtered.length} skill${filtered.length !== 1 ? 's' : ''} found`;
+
+  if (!filtered.length) {
+    grid.innerHTML = `<div class="no-results" style="grid-column:1/-1;text-align:center;padding:4rem 2rem">
+      <div style="font-size:3rem;margin-bottom:1rem">🔍</div>
+      <h3 style="font-family:var(--font-head);margin-bottom:.5rem">No skills found</h3>
+      <p style="color:var(--text-muted)">Try a different search or filter</p>
+    </div>`;
+    loadMoreBtn.style.display = 'none';
+    return;
+  }
+
+  grid.innerHTML = page.map(s => `
+    <div class="skill-card" onclick="openSkillDetail('${s._id}')">
+      <div class="skill-card__header">
+        <div class="skill-card__avatar" style="background:${s.color}">${s.initials || s.name.split(' ').map(n=>n[0]).join('')}</div>
+        <span class="skill-card__category cat-${s.category}">${getCategoryLabel(s.category)}</span>
+      </div>
+      <div class="skill-card__name">${s.name}</div>
+      <div class="skill-card__handle">${s.level || 'Intermediate'}</div>
+      <div class="skill-card__skill-row">
+        <span class="skill-label">Teaches</span>
+        <span class="skill-value">${s.teach}</span>
+      </div>
+      <div class="skill-card__skill-row">
+        <span class="skill-label">Wants</span>
+        <span class="skill-value">${s.learn}</span>
+      </div>
+      <div class="skill-card__footer">
+        <span class="skill-card__rating">★ ${s.rating}</span>
+        <span class="skill-card__exchanges">${s.exchanges} exchanges</span>
+      </div>
+    </div>
+  `).join('');
+
+  loadMoreBtn.style.display = filtered.length > currentPage * PER_PAGE ? 'block' : 'none';
+}
+
+function loadNextPage() {
+  currentPage++;
+  renderSkills();
+}
+
+function openSkillDetail(id) {
+  const s = allSkills.find(x => x._id === id);
+  if (!s) return;
+  document.getElementById('skillModalContent').innerHTML = `
+    <div class="skill-detail">
+      <div class="skill-detail__header">
+        <div class="skill-detail__avatar" style="background:${s.color}">${s.initials || s.name.split(' ').map(n=>n[0]).join('')}</div>
+        <div>
+          <div class="skill-detail__name" style="font-family:var(--font-head);font-size:1.4rem;font-weight:800">${s.name}</div>
+          <div style="color:var(--text-muted);font-size:.9rem;margin-top:.2rem"><span class="skill-card__category cat-${s.category}">${getCategoryLabel(s.category)}</span></div>
+        </div>
+      </div>
+      <p class="skill-detail__bio">${s.bio}</p>
+      <div class="skill-detail__grid">
+        <div class="skill-detail__item"><label>Teaches</label><p>${s.teach}</p></div>
+        <div class="skill-detail__item"><label>Wants to Learn</label><p>${s.learn}</p></div>
+        <div class="skill-detail__item"><label>Level</label><p>${s.level}</p></div>
+        <div class="skill-detail__item"><label>Rating</label><p>★ ${s.rating} · ${s.exchanges} exchanges</p></div>
+        <div class="skill-detail__item"><label>Format</label><p>${s.format}</p></div>
+      </div>
+      <button class="btn btn--primary btn--full" onclick="requestExchange('${s.name}')">Request Skill Exchange ↗</button>
+    </div>`;
+  document.getElementById('skillModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('skillModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function requestExchange(name) {
+  const user = Auth.getUser();
+  if (!user) {
+    window.location.href = 'login.html?redirect=explore.html';
+    return;
+  }
+  closeModal();
+  showToast(`Exchange request sent to ${name}! 🎉`, 'success');
+}
+
+Components.init();
+applyFilters();
+</script>
+</body>
+</html>

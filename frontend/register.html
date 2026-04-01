@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register — SkillSphere</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    .auth-page { min-height:100vh;display:flex;align-items:center;justify-content:center;padding:6rem 1.5rem 3rem;position:relative;overflow:hidden; }
+    .auth-page .orb { position:absolute;border-radius:50%;filter:blur(80px);opacity:.18;pointer-events:none; }
+    .auth-page .orb--1 { width:500px;height:500px;background:var(--accent-2);top:-100px;right:-100px; }
+    .auth-page .orb--2 { width:400px;height:400px;background:var(--accent);bottom:-100px;left:-100px; }
+    .auth-box { background:var(--bg-card);border:1px solid var(--border);border-radius:24px;padding:2.5rem;width:100%;max-width:500px;position:relative;z-index:2;box-shadow:var(--shadow);animation:fadeUp .5s ease; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+    .auth-logo { display:flex;align-items:center;gap:.5rem;font-family:var(--font-head);font-size:1.3rem;font-weight:800;margin-bottom:2rem; }
+    .auth-box h1 { font-family:var(--font-head);font-size:1.9rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.4rem; }
+    .auth-box .subtitle { color:var(--text-muted);margin-bottom:2rem; }
+    .step-indicator { display:flex;gap:.5rem;margin-bottom:2rem; }
+    .step-dot { flex:1;height:4px;border-radius:999px;background:var(--border);transition:var(--transition); }
+    .step-dot.active { background:linear-gradient(90deg,var(--accent),var(--accent-2)); }
+    .step-label { font-size:.8rem;color:var(--text-muted);margin-bottom:1.5rem; }
+    .auth-switch { text-align:center;font-size:.88rem;color:var(--text-muted);margin-top:1.2rem; }
+    .auth-switch a { color:var(--accent);font-weight:500; }
+    .step-section { display:none; }
+    .step-section.active { display:block; }
+    .benefit-list { display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.5rem; }
+    .benefit { display:flex;align-items:center;gap:.75rem;font-size:.88rem;color:var(--text-muted); }
+    .benefit span:first-child { font-size:1rem; }
+  </style>
+</head>
+<body>
+<div id="nav-placeholder"></div>
+
+<section class="auth-page">
+  <div class="orb orb--1"></div>
+  <div class="orb orb--2"></div>
+
+  <div class="auth-box">
+    <div class="auth-logo"><span class="logo-icon">◎</span> SkillSphere</div>
+    <h1>Create your account</h1>
+    <p class="subtitle">Free forever. No credit card needed.</p>
+
+    <!-- Step indicator -->
+    <div class="step-indicator">
+      <div class="step-dot active" id="dot1"></div>
+      <div class="step-dot" id="dot2"></div>
+    </div>
+    <p class="step-label" id="stepLabel">Step 1 of 2 — Personal Info</p>
+
+    <!-- Step 1 -->
+    <div class="step-section active" id="step1">
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" id="firstName" placeholder="Arjun" autocomplete="given-name"/>
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" id="lastName" placeholder="Mehta" autocomplete="family-name"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="email" placeholder="you@example.com" autocomplete="email"/>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Min. 6 characters" autocomplete="new-password"/>
+      </div>
+      <div id="step1Error" class="form-error"></div>
+      <button class="btn btn--primary btn--full" onclick="goStep2()">Continue →</button>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step-section" id="step2">
+      <div class="benefit-list">
+        <div class="benefit"><span>🎯</span><span>Tell us what you can teach and what you want to learn</span></div>
+      </div>
+      <div class="form-group">
+        <label>I can teach...</label>
+        <input type="text" id="teach" placeholder="e.g. Python, Guitar, Yoga, Graphic Design..."/>
+      </div>
+      <div class="form-group">
+        <label>I want to learn...</label>
+        <input type="text" id="learn" placeholder="e.g. Spanish, Photography, Finance..."/>
+      </div>
+      <div class="form-group">
+        <label>Category</label>
+        <select id="category">
+          <option value="tech">💻 Technology</option>
+          <option value="creative">🎨 Creative Arts</option>
+          <option value="music">🎵 Music</option>
+          <option value="language">🌍 Languages</option>
+          <option value="fitness">💪 Fitness & Wellness</option>
+          <option value="business">📊 Business</option>
+          <option value="other">🔖 Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Short Bio <span style="color:var(--text-muted)">(optional)</span></label>
+        <input type="text" id="bio" placeholder="Tell others a bit about yourself..."/>
+      </div>
+      <div id="step2Error" class="form-error"></div>
+      <div id="step2Success" class="form-success"></div>
+      <div style="display:flex;gap:.75rem">
+        <button class="btn btn--ghost" onclick="goStep1()" style="flex:1">← Back</button>
+        <button class="btn btn--primary" id="registerBtn" onclick="handleRegister()" style="flex:2">Create Account →</button>
+      </div>
+    </div>
+
+    <p class="auth-switch">Already a member? <a href="login.html">Log in</a></p>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+<script src="js/components.js"></script>
+<script>
+  Components.init();
+  if (Auth.getToken()) window.location.href = 'dashboard.html';
+
+  function goStep2() {
+    const fn = document.getElementById('firstName').value.trim();
+    const ln = document.getElementById('lastName').value.trim();
+    const em = document.getElementById('email').value.trim();
+    const pw = document.getElementById('password').value;
+    const err = document.getElementById('step1Error');
+    err.textContent = '';
+    if (!fn || !ln || !em || !pw) { err.textContent = 'Please fill in all fields.'; return; }
+    if (!isValidEmail(em)) { err.textContent = 'Enter a valid email address.'; return; }
+    if (pw.length < 6) { err.textContent = 'Password must be at least 6 characters.'; return; }
+    document.getElementById('step1').classList.remove('active');
+    document.getElementById('step2').classList.add('active');
+    document.getElementById('dot2').classList.add('active');
+    document.getElementById('stepLabel').textContent = 'Step 2 of 2 — Your Skills';
+  }
+
+  function goStep1() {
+    document.getElementById('step2').classList.remove('active');
+    document.getElementById('step1').classList.add('active');
+    document.getElementById('dot2').classList.remove('active');
+    document.getElementById('stepLabel').textContent = 'Step 1 of 2 — Personal Info';
+  }
+
+  async function handleRegister() {
+    const teach = document.getElementById('teach').value.trim();
+    const learn = document.getElementById('learn').value.trim();
+    const err   = document.getElementById('step2Error');
+    const succ  = document.getElementById('step2Success');
+    const btn   = document.getElementById('registerBtn');
+    err.textContent = ''; succ.textContent = '';
+    if (!teach || !learn) { err.textContent = 'Please fill in both skill fields.'; return; }
+
+    btn.textContent = 'Creating account...';
+    btn.disabled = true;
+
+    try {
+      const data = await API.post('/auth/register', {
+        firstName: document.getElementById('firstName').value.trim(),
+        lastName:  document.getElementById('lastName').value.trim(),
+        email:     document.getElementById('email').value.trim(),
+        password:  document.getElementById('password').value,
+        teach, learn,
+        category: document.getElementById('category').value,
+        bio:      document.getElementById('bio').value.trim(),
+      });
+      Auth.save(data.token, data.user);
+      succ.textContent = '🎉 Account created! Redirecting to dashboard...';
+      setTimeout(() => window.location.href = 'dashboard.html', 1200);
+    } catch(err2) {
+      err.textContent = err2.message;
+      btn.textContent = 'Create Account →';
+      btn.disabled = false;
+    }
+  }
+</script>
+</body>
+</html>
