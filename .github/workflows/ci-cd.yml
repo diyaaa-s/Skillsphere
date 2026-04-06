@@ -65,7 +65,7 @@ jobs:
           curl -f http://localhost:5001/api/health && echo "✅ Health check passed!"
           kill $SERVER_PID || true
 
-  # ===== JOB 2: Docker Build & Push =====
+  # ===== JOB 2: Docker Build =====
   docker-build:
     name: 🐳 Docker Build & Push
     runs-on: ubuntu-latest
@@ -91,13 +91,10 @@ jobs:
         with:
           context: .
           dockerfile: Dockerfile
-          push: ${{ secrets.DOCKER_HUB_USERNAME != '' }}
-          tags: |
-            ${{ secrets.DOCKER_HUB_USERNAME || 'local' }}/skillsphere:latest
-            ${{ secrets.DOCKER_HUB_USERNAME || 'local' }}/skillsphere:${{ github.sha }}
+          push: false
+          tags: skillsphere:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          load: ${{ secrets.DOCKER_HUB_USERNAME == '' }}
 
       - name: ✅ Docker build complete
         run: echo "🐳 Docker image built successfully!"
@@ -120,10 +117,17 @@ jobs:
       - name: 🔧 Setup Pages
         uses: actions/configure-pages@v4
 
-      - name: 📦 Upload frontend to Pages
+      - name: 📁 Prepare frontend for GitHub Pages
+        run: |
+          mkdir -p ./pages-build
+          cp -r frontend/* ./pages-build/
+          echo "✅ Frontend files copied to pages-build/"
+          ls -la ./pages-build/
+
+      - name: 📦 Upload to GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./frontend
+          path: ./pages-build
 
       - name: 🚀 Deploy to GitHub Pages
         id: deployment
@@ -132,7 +136,6 @@ jobs:
       - name: ✅ Deployment complete
         run: |
           echo "🌐 SkillSphere is LIVE at: ${{ steps.deployment.outputs.page_url }}"
-          echo "✅ All pages deployed successfully!"
 
   # ===== JOB 4: Security Scan =====
   security:
@@ -154,7 +157,7 @@ jobs:
         run: npm ci
 
       - name: 🔍 npm audit
-        run: npm audit --audit-level=high || echo "⚠️ Review vulnerabilities before production"
+        run: npm audit --audit-level=high || echo "⚠️ Review before production"
 
       - name: 🐳 Trivy scan
         uses: aquasecurity/trivy-action@master
