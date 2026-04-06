@@ -8,7 +8,7 @@ require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://mongo:27017/skillsphere';
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/skillsphere';
 
 // ===== MIDDLEWARE =====
 app.use(helmet({
@@ -26,10 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../frontend')));
 
 // ===== DB CONNECTION =====
-mongoose.connect(MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect(MONGO_URI)
 .then(() => console.log('✅ MongoDB connected:', MONGO_URI))
 .catch(err => console.error('❌ MongoDB error:', err.message));
 
@@ -42,7 +39,7 @@ app.use('/api/auth',   authRoutes);
 app.use('/api/skills', skillRoutes);
 app.use('/api/users',  userRoutes);
 
-// ===== HEALTH CHECK =====
+// ===== HEALTH CHECK — must be BEFORE catch-all =====
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',

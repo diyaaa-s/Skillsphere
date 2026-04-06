@@ -1,6 +1,4 @@
 // ===== SHARED COMPONENTS =====
-// Injected into every page via: Components.init()
-
 const Components = {
 
   navHTML: `
@@ -15,9 +13,7 @@ const Components = {
       <li><a href="dashboard.html">Dashboard</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
-    <div class="nav__actions" id="navActions">
-      <!-- Injected by auth state -->
-    </div>
+    <div class="nav__actions" id="navActions"></div>
     <button class="hamburger" id="hamburgerBtn">☰</button>
   </nav>`,
 
@@ -47,7 +43,7 @@ const Components = {
           <div>
             <h5>Company</h5>
             <a href="contact.html">Contact</a>
-            <a href="about.html">About</a>
+            <a href="how-it-works.html">About</a>
           </div>
         </div>
       </div>
@@ -60,31 +56,20 @@ const Components = {
   <div class="toast" id="toast"></div>`,
 
   init() {
-    // Inject nav
     const navEl = document.getElementById('nav-placeholder');
     if (navEl) navEl.innerHTML = this.navHTML;
-
-    // Inject footer
     const footerEl = document.getElementById('footer-placeholder');
     if (footerEl) footerEl.innerHTML = this.footerHTML;
-
-    // Nav scroll effect
     window.addEventListener('scroll', () => {
       const nav = document.getElementById('navbar');
       if (nav) nav.classList.toggle('scrolled', window.scrollY > 50);
     });
-
-    // Hamburger
     document.addEventListener('click', (e) => {
       if (e.target.id === 'hamburgerBtn' || e.target.closest('#hamburgerBtn')) {
         this.toggleMobileNav();
       }
     });
-
-    // Auth state
     this.updateNavAuth();
-
-    // Active link highlight
     this.highlightActiveLink();
   },
 
@@ -126,9 +111,7 @@ const Auth = {
   getUser() {
     try { return JSON.parse(localStorage.getItem('ss_user')); } catch { return null; }
   },
-  getToken() {
-    return localStorage.getItem('ss_token');
-  },
+  getToken() { return localStorage.getItem('ss_token'); },
   save(token, user) {
     localStorage.setItem('ss_token', token);
     localStorage.setItem('ss_user', JSON.stringify(user));
@@ -148,23 +131,71 @@ const Auth = {
 };
 
 // ===== API HELPER =====
+// Auto-detects: uses real backend on localhost, demo mode on GitHub Pages
 const API = {
-  base: '/api',
-  async request(method, path, body = null) {
-    const headers = { 'Content-Type': 'application/json' };
-    const token = Auth.getToken();
-    if (token) headers['Authorization'] = `Bearer ${token}`;
-    const opts = { method, headers };
-    if (body) opts.body = JSON.stringify(body);
-    const res = await fetch(this.base + path, opts);
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.message || 'Request failed');
-    return data;
+  isLocal() {
+    return window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
   },
-  get(path)         { return this.request('GET', path); },
-  post(path, body)  { return this.request('POST', path, body); },
-  put(path, body)   { return this.request('PUT', path, body); },
-  delete(path)      { return this.request('DELETE', path); },
+
+  async request(method, path, body = null) {
+    if (this.isLocal()) {
+      try {
+        const headers = { 'Content-Type': 'application/json' };
+        const token = Auth.getToken();
+        if (token) headers['Authorization'] = 'Bearer ' + token;
+        const opts = { method, headers };
+        if (body) opts.body = JSON.stringify(body);
+        const res = await fetch('/api' + path, opts);
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || 'Request failed');
+        return data;
+      } catch(err) {
+        if (err.message && err.message !== 'Failed to fetch') throw err;
+        return this.demo(method, path, body);
+      }
+    }
+    return this.demo(method, path, body);
+  },
+
+  // Full demo mode — entire app works without any backend
+  demo(method, path, body) {
+    if (method === 'POST' && path === '/auth/register') {
+      if (!body.firstName || !body.email || !body.password) {
+        return Promise.reject(new Error('Please fill in all fields.'));
+      }
+      const user = {
+        id: 'u_' + Date.now(),
+        firstName: body.firstName, lastName: body.lastName,
+        email: body.email, teach: body.teach, learn: body.learn,
+        category: body.category || 'other', bio: body.bio || '',
+        rating: 0, exchanges: 0
+      };
+      return Promise.resolve({ success: true, token: 'demo_' + Date.now(), user });
+    }
+    if (method === 'POST' && path === '/auth/login') {
+      if (!body.email || !body.password) {
+        return Promise.reject(new Error('Please provide email and password.'));
+      }
+      const existing = Auth.getUser();
+      const user = (existing && existing.email === body.email)
+        ? existing
+        : { id: 'u_demo', firstName: 'Demo', lastName: 'User', email: body.email, teach: 'JavaScript', learn: 'Design', rating: 4.8, exchanges: 12, category: 'tech' };
+      return Promise.resolve({ success: true, token: 'demo_' + Date.now(), user });
+    }
+    if (method === 'PUT' && path === '/auth/me') {
+      const user = Object.assign({}, Auth.getUser(), body);
+      return Promise.resolve({ success: true, user });
+    }
+    if (method === 'POST' && path === '/skills') {
+      return Promise.resolve({ success: true, message: 'Skill listed successfully!', skill: body });
+    }
+    return Promise.resolve({ success: true, message: 'OK (demo mode)' });
+  },
+
+  get(path)        { return this.request('GET', path); },
+  post(path, body) { return this.request('POST', path, body); },
+  put(path, body)  { return this.request('PUT', path, body); },
+  delete(path)     { return this.request('DELETE', path); },
 };
 
 // ===== TOAST =====
@@ -172,7 +203,7 @@ function showToast(msg, type = 'success') {
   const t = document.getElementById('toast');
   if (!t) return;
   t.textContent = msg;
-  t.className = `toast show ${type}`;
+  t.className = 'toast show ' + type;
   setTimeout(() => t.classList.remove('show'), 3500);
 }
 
