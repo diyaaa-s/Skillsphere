@@ -8,29 +8,24 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css"/>
   <style>
-    .list-page { padding:7rem 0 4rem; }
-    .list-layout { display:grid;grid-template-columns:1fr 380px;gap:2.5rem;max-width:900px;margin:0 auto; }
-    .list-page h1 { font-family:var(--font-head);font-size:2rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.4rem; }
-    .list-page .subtitle { color:var(--text-muted);margin-bottom:2rem; }
-    .form-card { background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:2rem; }
-    .form-section-title { font-family:var(--font-head);font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);margin:1.5rem 0 1rem;padding-top:1.5rem;border-top:1px solid var(--border); }
-    .form-section-title:first-child { margin-top:0;padding-top:0;border-top:none; }
-    .form-group textarea { resize:vertical;min-height:100px; }
-    .tag-input-wrap { display:flex;flex-wrap:wrap;gap:.4rem;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.5rem; }
-    .tag-input-wrap input { border:none;background:none;outline:none;color:var(--text);font-family:var(--font-body);font-size:.9rem;flex:1;min-width:120px;padding:.25rem .3rem; }
-    .tag { display:flex;align-items:center;gap:.4rem;padding:.25rem .65rem;background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.2);border-radius:999px;font-size:.8rem;color:var(--accent); }
-    .tag button { background:none;border:none;color:var(--accent);cursor:pointer;font-size:.9rem;line-height:1;padding:0; }
-    .preview-card { background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;position:sticky;top:90px; }
-    .preview-card h4 { font-family:var(--font-head);font-size:.85rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);margin-bottom:1rem; }
-    .preview-inner { background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem;margin-bottom:1rem; }
-    .preview-avatar { width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-family:var(--font-head);font-size:1.1rem;margin-bottom:.75rem; }
-    .preview-name { font-weight:700;font-size:.95rem; }
-    .preview-row { font-size:.83rem;color:var(--text-muted);margin-top:.4rem; }
-    .preview-row strong { color:var(--text); }
-    .tips-card { background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-top:1rem; }
-    .tip { display:flex;gap:.75rem;font-size:.85rem;color:var(--text-muted);margin-bottom:.75rem; }
-    .tip:last-child { margin-bottom:0; }
-    @media(max-width:800px){ .list-layout{grid-template-columns:1fr} .preview-card{position:static} }
+    .list-page{padding:7rem 0 4rem}
+    .list-layout{display:grid;grid-template-columns:1fr 360px;gap:2.5rem;max-width:960px;margin:0 auto}
+    .form-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:2rem}
+    .form-section-title{font-family:var(--font-head);font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);margin:1.5rem 0 1rem;padding-top:1.5rem;border-top:1px solid var(--border)}
+    .form-section-title:first-child{margin-top:0;padding-top:0;border-top:none}
+    .form-group textarea{resize:vertical;min-height:100px}
+    .tag-input-wrap{display:flex;flex-wrap:wrap;gap:.4rem;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.5rem}
+    .tag-input-wrap input{border:none;background:none;outline:none;color:var(--text);font-family:var(--font-body);font-size:.9rem;flex:1;min-width:120px;padding:.25rem .3rem}
+    .tag{display:flex;align-items:center;gap:.4rem;padding:.25rem .65rem;background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.2);border-radius:999px;font-size:.8rem;color:var(--accent)}
+    .tag button{background:none;border:none;color:var(--accent);cursor:pointer;font-size:.9rem;line-height:1;padding:0}
+    .preview-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;position:sticky;top:90px}
+    .preview-card h4{font-family:var(--font-head);font-size:.82rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);margin-bottom:1rem}
+    .preview-inner{background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem;margin-bottom:1rem}
+    .preview-avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:1.1rem;margin-bottom:.75rem}
+    .tips-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-top:1rem}
+    .tip{display:flex;gap:.75rem;font-size:.85rem;color:var(--text-muted);margin-bottom:.75rem}
+    .tip:last-child{margin-bottom:0}
+    @media(max-width:800px){.list-layout{grid-template-columns:1fr}.preview-card{position:static}}
   </style>
 </head>
 <body>
@@ -38,21 +33,22 @@
 
 <section class="list-page">
   <div class="container">
-    <div style="max-width:900px;margin:0 auto 2rem">
+    <div style="max-width:960px;margin:0 auto 2rem">
       <div class="section-tag">Share Your Knowledge</div>
-      <h1>List a <span class="gradient-text">Skill</span></h1>
-      <p class="subtitle">Tell the community what you can teach and what you'd love to learn in return</p>
+      <h1 style="font-family:var(--font-head);font-size:2rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.4rem">
+        List a <span class="gradient-text">Skill</span>
+      </h1>
+      <p style="color:var(--text-muted)">Tell the community what you can teach and what you'd love to learn in return</p>
     </div>
 
     <div class="list-layout">
-      <!-- Form -->
       <div class="form-card">
 
         <div class="form-section-title">What You're Teaching</div>
 
         <div class="form-group">
           <label>Skill Title <span style="color:var(--red)">*</span></label>
-          <input type="text" id="title" placeholder="e.g. Python for Beginners, Acoustic Guitar, Hatha Yoga..." oninput="updatePreview()"/>
+          <input type="text" id="title" placeholder="e.g. Python for Beginners, Guitar, Hatha Yoga..." oninput="updatePreview()"/>
         </div>
 
         <div class="form-group">
@@ -91,7 +87,7 @@
 
         <div class="form-group">
           <label>Description <span style="color:var(--red)">*</span></label>
-          <textarea id="description" placeholder="Describe what you'll teach, your experience, and what learners can expect..."></textarea>
+          <textarea id="description" placeholder="Describe what you'll teach, your experience level, and what learners can expect..."></textarea>
         </div>
 
         <div class="form-group">
@@ -126,27 +122,26 @@
         </button>
       </div>
 
-      <!-- Preview + Tips -->
       <div>
         <div class="preview-card">
           <h4>Live Preview</h4>
           <div class="preview-inner">
             <div class="preview-avatar" id="previewAvatar">?</div>
-            <div class="preview-name" id="previewTitle">Your skill title</div>
-            <div class="preview-row" id="previewCat" style="margin-top:.5rem"></div>
-            <div class="preview-row" style="margin-top:.75rem">
-              <strong>Teaches:</strong> <span id="previewTeach">—</span>
+            <div style="font-weight:700;font-size:.95rem" id="previewTitle">Your skill title</div>
+            <div id="previewCat" style="margin-top:.5rem"></div>
+            <div style="font-size:.83rem;color:var(--text-muted);margin-top:.75rem">
+              <strong style="color:var(--text)">Teaches:</strong> <span id="previewTeach">—</span>
             </div>
-            <div class="preview-row">
-              <strong>Wants:</strong> <span id="previewWant">—</span>
+            <div style="font-size:.83rem;color:var(--text-muted)">
+              <strong style="color:var(--text)">Wants:</strong> <span id="previewWant">—</span>
             </div>
           </div>
-          <p style="font-size:.8rem;color:var(--text-muted);text-align:center">This is how your card will appear to others</p>
+          <p style="font-size:.8rem;color:var(--text-muted);text-align:center">How your card will appear to others</p>
         </div>
 
         <div class="tips-card">
-          <div style="font-family:var(--font-head);font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin-bottom:1rem">Tips for a great listing</div>
-          <div class="tip"><span>✍️</span><span>Write a clear, specific title like "Beginner Python" not just "Coding"</span></div>
+          <div style="font-family:var(--font-head);font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin-bottom:1rem">Tips for a great listing</div>
+          <div class="tip"><span>✍️</span><span>Write a clear, specific title — "Beginner Python" not just "Coding"</span></div>
           <div class="tip"><span>🎯</span><span>Describe what the learner will gain — outcomes matter!</span></div>
           <div class="tip"><span>🏷️</span><span>Add relevant tags to get discovered in searches</span></div>
           <div class="tip"><span>🤝</span><span>Be specific about what you want to learn in return</span></div>
@@ -164,7 +159,8 @@
 
   const user = Auth.getUser();
   if (user) {
-    document.getElementById('previewAvatar').textContent = (user.firstName[0] + user.lastName[0]).toUpperCase();
+    document.getElementById('previewAvatar').textContent =
+      ((user.firstName || 'U')[0] + (user.lastName || 'S')[0]).toUpperCase();
   }
 
   // ===== Tags =====
@@ -172,7 +168,7 @@
   function handleTagInput(e) {
     if (e.key === 'Enter' || e.key === ',') {
       e.preventDefault();
-      const val = document.getElementById('tagInput').value.trim().toLowerCase().replace(',','');
+      const val = document.getElementById('tagInput').value.trim().replace(',','').toLowerCase();
       if (val && !tags.includes(val) && tags.length < 8) {
         tags.push(val);
         renderTags();
@@ -180,10 +176,7 @@
       document.getElementById('tagInput').value = '';
     }
   }
-  function removeTag(t) {
-    tags = tags.filter(x => x !== t);
-    renderTags();
-  }
+  function removeTag(t) { tags = tags.filter(x => x !== t); renderTags(); }
   function renderTags() {
     const wrap = document.getElementById('tagWrap');
     const input = document.getElementById('tagInput');
@@ -191,14 +184,15 @@
     tags.forEach(t => {
       const el = document.createElement('span');
       el.className = 'tag';
-      el.innerHTML = `${t} <button onclick="removeTag('${t}')">×</button>`;
+      el.innerHTML = t + ' <button onclick="removeTag(\'' + t + '\')">×</button>';
       wrap.appendChild(el);
     });
     wrap.appendChild(input);
+    input.focus();
   }
 
-  // ===== Preview =====
-  const catEmoji = { tech:'💻',creative:'🎨',music:'🎵',language:'🌍',fitness:'💪',business:'📊',other:'🔖' };
+  // ===== Live Preview =====
+  const catEmoji = {tech:'💻',creative:'🎨',music:'🎵',language:'🌍',fitness:'💪',business:'📊',other:'🔖'};
   function updatePreview() {
     const title = document.getElementById('title').value || 'Your skill title';
     const cat   = document.getElementById('category').value;
@@ -206,10 +200,11 @@
     document.getElementById('previewTitle').textContent = title;
     document.getElementById('previewTeach').textContent = title;
     document.getElementById('previewWant').textContent  = want;
-    document.getElementById('previewCat').innerHTML = cat ? `<span class="skill-card__category cat-${cat}">${catEmoji[cat]} ${cat}</span>` : '';
+    document.getElementById('previewCat').innerHTML = cat
+      ? '<span class="skill-card__category cat-'+cat+'">' + catEmoji[cat] + ' ' + cat + '</span>' : '';
   }
 
-  // ===== Submit =====
+  // ===== Submit — CREATE skill via POST /api/skills =====
   async function submitSkill() {
     const title       = document.getElementById('title').value.trim();
     const category    = document.getElementById('category').value;
@@ -222,24 +217,31 @@
     const errEl  = document.getElementById('formError');
     const succEl = document.getElementById('formSuccess');
     const btn    = document.getElementById('submitBtn');
-    errEl.textContent = ''; succEl.textContent = '';
+    errEl.textContent = '';
+    succEl.textContent = '';
 
-    if (!title || !category || !description || !lookingFor) {
-      errEl.textContent = 'Please fill in all required fields.';
-      return;
-    }
+    if (!title)       { errEl.textContent = 'Please enter a skill title.'; return; }
+    if (!category)    { errEl.textContent = 'Please select a category.'; return; }
+    if (!description) { errEl.textContent = 'Please add a description.'; return; }
+    if (!lookingFor)  { errEl.textContent = 'Please specify what you want in return.'; return; }
 
     btn.textContent = 'Publishing...';
     btn.disabled = true;
 
     try {
-      await API.post('/skills', { title, category, description, lookingFor, level, format, availability, tags });
-      succEl.textContent = '🎉 Skill listed successfully! Redirecting...';
-      setTimeout(() => window.location.href = 'dashboard.html', 1500);
+      const data = await API.post('/skills', {
+        title, category, description, lookingFor,
+        level, format, availability, tags
+      });
+
+      if (data.success) {
+        succEl.textContent = '🎉 Skill listed successfully! Redirecting to dashboard...';
+        setTimeout(() => window.location.href = 'dashboard.html', 1500);
+      } else {
+        errEl.textContent = data.message || 'Something went wrong.';
+      }
     } catch(err) {
-      // Simulate success if backend offline
-      succEl.textContent = '🎉 Skill listed! (Demo mode — backend offline)';
-      setTimeout(() => window.location.href = 'dashboard.html', 1500);
+      errEl.textContent = err.message || 'Failed to list skill. Please try again.';
     } finally {
       btn.textContent = '🚀 Publish Skill Listing';
       btn.disabled = false;

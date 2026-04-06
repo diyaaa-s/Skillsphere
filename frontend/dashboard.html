@@ -8,48 +8,53 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css"/>
   <style>
-    .dashboard { padding:7rem 0 4rem; }
-    .dash-header { display:flex;align-items:center;justify-content:space-between;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem; }
-    .dash-welcome h1 { font-family:var(--font-head);font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;letter-spacing:-.02em; }
-    .dash-welcome p  { color:var(--text-muted);margin-top:.3rem; }
-    .stats-row { display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:2.5rem; }
-    .stat-card { background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;text-align:center; }
-    .stat-card__icon { font-size:1.8rem;margin-bottom:.5rem; }
-    .stat-card__num { font-family:var(--font-head);font-size:2rem;font-weight:800;color:var(--accent); }
-    .stat-card__label { font-size:.82rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-top:.3rem; }
-    .dash-grid { display:grid;grid-template-columns:2fr 1fr;gap:2rem; }
-    .dash-section-title { font-family:var(--font-head);font-size:1.1rem;font-weight:700;margin-bottom:1.2rem;display:flex;align-items:center;justify-content:space-between; }
-    .dash-section-title a { font-size:.82rem;color:var(--accent);font-weight:500; }
-    .card-box { background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem; }
-    .profile-avatar { width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:800;font-family:var(--font-head);color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent-2));margin:0 auto 1rem;font-size:2rem; }
-    .profile-name { font-family:var(--font-head);font-size:1.2rem;font-weight:800;text-align:center;margin-bottom:.3rem; }
-    .profile-email { font-size:.85rem;color:var(--text-muted);text-align:center;margin-bottom:1.2rem; }
-    .profile-badges { display:flex;flex-direction:column;gap:.5rem; }
-    .profile-badge { display:flex;align-items:center;gap:.75rem;font-size:.85rem;padding:.5rem .75rem;border-radius:var(--radius-sm);background:rgba(255,255,255,.03); }
-    .profile-badge span:first-child { font-size:1rem; }
-    .activity-item { display:flex;align-items:center;gap:1rem;padding:.9rem 0;border-bottom:1px solid var(--border); }
-    .activity-item:last-child { border-bottom:none; }
-    .activity-icon { width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0; }
-    .activity-icon.green { background:rgba(16,185,129,.15);color:var(--green); }
-    .activity-icon.blue  { background:rgba(0,229,255,.12); color:var(--accent); }
-    .activity-icon.purple{ background:rgba(124,58,237,.15);color:#a78bfa; }
-    .activity-text { flex:1;font-size:.88rem; }
-    .activity-time { font-size:.78rem;color:var(--text-muted); }
-    .empty-state { text-align:center;padding:2.5rem;color:var(--text-muted); }
-    .empty-state .empty-icon { font-size:2.5rem;margin-bottom:.75rem; }
-    .tab-bar { display:flex;gap:.5rem;margin-bottom:1.5rem;border-bottom:1px solid var(--border);padding-bottom:0; }
-    .tab-btn { padding:.6rem 1.2rem;border:none;background:none;color:var(--text-muted);font-family:var(--font-body);font-size:.9rem;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:var(--transition); }
-    .tab-btn.active { color:var(--accent);border-bottom-color:var(--accent); }
-    .tab-panel { display:none; }
-    .tab-panel.active { display:block; }
-    .skill-row { display:flex;align-items:center;gap:1rem;padding:.9rem 0;border-bottom:1px solid var(--border); }
-    .skill-row:last-child { border-bottom:none; }
-    .skill-row__info { flex:1; }
-    .skill-row__title { font-weight:600;font-size:.92rem;margin-bottom:.2rem; }
-    .skill-row__sub   { font-size:.8rem;color:var(--text-muted); }
-    .badge { display:inline-flex;align-items:center;padding:.25rem .65rem;border-radius:999px;font-size:.73rem;font-weight:600; }
-    .badge-active { background:rgba(16,185,129,.12);color:var(--green); }
-    .badge-pending { background:rgba(245,158,11,.12);color:var(--accent-3); }
+    .dashboard{padding:7rem 0 4rem}
+    .dash-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem}
+    .dash-welcome h1{font-family:var(--font-head);font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;letter-spacing:-.02em}
+    .dash-welcome p{color:var(--text-muted);margin-top:.3rem}
+    .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:2.5rem}
+    .stat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;text-align:center}
+    .stat-card__icon{font-size:1.8rem;margin-bottom:.5rem}
+    .stat-card__num{font-family:var(--font-head);font-size:2rem;font-weight:800;color:var(--accent)}
+    .stat-card__label{font-size:.78rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-top:.3rem}
+    .dash-grid{display:grid;grid-template-columns:2fr 1fr;gap:2rem}
+    .card-box{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem}
+    .dash-section-title{font-family:var(--font-head);font-size:1rem;font-weight:700;margin-bottom:1.2rem;display:flex;align-items:center;justify-content:space-between}
+    .dash-section-title a{font-size:.82rem;color:var(--accent);font-weight:500}
+    .profile-avatar{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:2rem;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent-2));margin:0 auto 1rem}
+    .profile-name{font-family:var(--font-head);font-size:1.1rem;font-weight:800;text-align:center;margin-bottom:.3rem}
+    .profile-email{font-size:.82rem;color:var(--text-muted);text-align:center;margin-bottom:1.2rem}
+    .profile-badge{display:flex;align-items:center;gap:.75rem;font-size:.85rem;padding:.5rem .75rem;border-radius:var(--radius-sm);background:rgba(255,255,255,.03)}
+    .profile-badges{display:flex;flex-direction:column;gap:.5rem}
+    .tab-bar{display:flex;gap:.5rem;margin-bottom:1.5rem;border-bottom:1px solid var(--border);padding-bottom:0}
+    .tab-btn{padding:.6rem 1.2rem;border:none;background:none;color:var(--text-muted);font-family:var(--font-body);font-size:.88rem;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:var(--transition)}
+    .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
+    .activity-item{display:flex;align-items:center;gap:1rem;padding:.9rem 0;border-bottom:1px solid var(--border)}
+    .activity-item:last-child{border-bottom:none}
+    .activity-icon{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+    .activity-icon.green{background:rgba(16,185,129,.15);color:var(--green)}
+    .activity-icon.blue{background:rgba(0,229,255,.12);color:var(--accent)}
+    .activity-icon.purple{background:rgba(124,58,237,.15);color:#a78bfa}
+    .skill-item{display:flex;align-items:flex-start;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--border)}
+    .skill-item:last-child{border-bottom:none}
+    .skill-item__icon{width:44px;height:44px;border-radius:var(--radius-sm);background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:.9rem;flex-shrink:0}
+    .skill-item__info{flex:1}
+    .skill-item__title{font-weight:600;font-size:.92rem;margin-bottom:.25rem}
+    .skill-item__sub{font-size:.8rem;color:var(--text-muted)}
+    .skill-item__actions{display:flex;gap:.5rem;flex-shrink:0}
+    .badge{display:inline-flex;align-items:center;padding:.25rem .65rem;border-radius:999px;font-size:.72rem;font-weight:600}
+    .badge-active{background:rgba(16,185,129,.12);color:var(--green)}
+    .badge-inactive{background:rgba(239,68,68,.12);color:var(--red)}
+    .empty-state{text-align:center;padding:2.5rem;color:var(--text-muted)}
+    .empty-state .empty-icon{font-size:2.5rem;margin-bottom:.75rem}
+    /* Edit Modal */
+    .modal-overlay{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;pointer-events:none;transition:var(--transition)}
+    .modal-overlay.active{opacity:1;pointer-events:all}
+    .modal{background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:2rem;width:100%;max-width:500px;max-height:90vh;overflow-y:auto;position:relative;transform:translateY(20px);transition:var(--transition)}
+    .modal-overlay.active .modal{transform:translateY(0)}
+    .modal__close{position:absolute;top:1rem;right:1rem;background:rgba(255,255,255,.06);border:none;color:var(--text);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:.9rem}
     @media(max-width:900px){.dash-grid{grid-template-columns:1fr}}
   </style>
 </head>
@@ -59,11 +64,10 @@
 <section class="dashboard">
   <div class="container">
 
-    <!-- Header -->
     <div class="dash-header">
       <div class="dash-welcome">
         <h1>Welcome back, <span class="gradient-text" id="userName">...</span> 👋</h1>
-        <p id="userSubtitle">Here's what's happening on your SkillSphere</p>
+        <p id="userSubtitle">Loading your profile...</p>
       </div>
       <div style="display:flex;gap:.75rem">
         <a href="list-skill.html" class="btn btn--primary">+ List a Skill</a>
@@ -71,17 +75,16 @@
       </div>
     </div>
 
-    <!-- Stats -->
     <div class="stats-row">
       <div class="stat-card">
         <div class="stat-card__icon">🤝</div>
         <div class="stat-card__num" id="statExchanges">0</div>
-        <div class="stat-card__label">Total Exchanges</div>
+        <div class="stat-card__label">Exchanges</div>
       </div>
       <div class="stat-card">
         <div class="stat-card__icon">⭐</div>
         <div class="stat-card__num" id="statRating">—</div>
-        <div class="stat-card__label">Avg Rating</div>
+        <div class="stat-card__label">Rating</div>
       </div>
       <div class="stat-card">
         <div class="stat-card__icon">📋</div>
@@ -91,89 +94,65 @@
       <div class="stat-card">
         <div class="stat-card__icon">👥</div>
         <div class="stat-card__num">2,400+</div>
-        <div class="stat-card__label">Community Members</div>
+        <div class="stat-card__label">Community</div>
       </div>
     </div>
 
-    <!-- Main Grid -->
     <div class="dash-grid">
 
       <!-- Left Column -->
       <div>
-        <!-- Tabs -->
         <div class="card-box">
           <div class="tab-bar">
-            <button class="tab-btn active" onclick="switchTab('activity', this)">📅 Recent Activity</button>
-            <button class="tab-btn" onclick="switchTab('myskills', this)">📋 My Skills</button>
-            <button class="tab-btn" onclick="switchTab('requests', this)">📬 Requests</button>
+            <button class="tab-btn active" onclick="switchTab('activity',this)">📅 Activity</button>
+            <button class="tab-btn" onclick="switchTab('myskills',this)">📋 My Skills</button>
+            <button class="tab-btn" onclick="switchTab('requests',this)">📬 Requests</button>
           </div>
 
           <!-- Activity Tab -->
           <div class="tab-panel active" id="tab-activity">
             <div class="activity-item">
               <div class="activity-icon green">✓</div>
-              <div class="activity-text"><strong>Exchange completed</strong> with Kavya Reddy<br><span style="font-size:.82rem;color:var(--text-muted)">Python ↔ Guitar · 3 sessions</span></div>
-              <span class="activity-time">2h ago</span>
+              <div style="flex:1;font-size:.88rem"><strong>Account created!</strong> Welcome to SkillSphere</div>
+              <span style="font-size:.78rem;color:var(--text-muted)">just now</span>
             </div>
             <div class="activity-item">
               <div class="activity-icon blue">📨</div>
-              <div class="activity-text"><strong>New request</strong> from Vikram Nair<br><span style="font-size:.82rem;color:var(--text-muted)">Wants: your skill · Offers: Guitar lessons</span></div>
-              <span class="activity-time">5h ago</span>
+              <div style="flex:1;font-size:.88rem"><strong>List your first skill</strong> to start getting exchange requests</div>
+              <span style="font-size:.78rem;color:var(--text-muted)"></span>
             </div>
             <div class="activity-item">
-              <div class="activity-icon purple">⭐</div>
-              <div class="activity-text"><strong>You received a 5★ review</strong><br><span style="font-size:.82rem;color:var(--text-muted)">"Amazing teacher, super patient!"</span></div>
-              <span class="activity-time">1d ago</span>
-            </div>
-            <div class="activity-item">
-              <div class="activity-icon green">🎯</div>
-              <div class="activity-text"><strong>Profile viewed</strong> 12 times this week</div>
-              <span class="activity-time">2d ago</span>
-            </div>
-            <div class="activity-item">
-              <div class="activity-icon blue">✨</div>
-              <div class="activity-text"><strong>Joined SkillSphere</strong> — welcome aboard!</div>
-              <span class="activity-time">recently</span>
+              <div class="activity-icon purple">🌐</div>
+              <div style="flex:1;font-size:.88rem"><strong>Browse the marketplace</strong> to find your first exchange partner</div>
+              <span style="font-size:.78rem;color:var(--text-muted)"></span>
             </div>
           </div>
 
-          <!-- My Skills Tab -->
+          <!-- My Skills Tab — loads from API -->
           <div class="tab-panel" id="tab-myskills">
             <div id="mySkillsList">
               <div class="empty-state">
-                <div class="empty-icon">📋</div>
-                <p>You haven't listed any skills yet</p>
-                <a href="list-skill.html" class="btn btn--primary" style="margin-top:1rem;display:inline-flex">+ List Your First Skill</a>
+                <div class="empty-icon">⏳</div>
+                <p>Loading your skills...</p>
               </div>
+            </div>
+            <div style="margin-top:1rem">
+              <a href="list-skill.html" class="btn btn--primary">+ List a New Skill</a>
             </div>
           </div>
 
           <!-- Requests Tab -->
           <div class="tab-panel" id="tab-requests">
-            <div class="skill-row">
-              <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#00e5ff,#7c3aed);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:.85rem">VN</div>
-              <div class="skill-row__info">
-                <div class="skill-row__title">Vikram Nair wants to exchange</div>
-                <div class="skill-row__sub">Offers: Guitar · Wants: Your skill</div>
-              </div>
-              <div style="display:flex;gap:.5rem">
-                <button class="btn btn--primary" style="padding:.4rem .9rem;font-size:.82rem" onclick="showToast('Request accepted! 🎉','success')">Accept</button>
-                <button class="btn btn--ghost" style="padding:.4rem .9rem;font-size:.82rem" onclick="showToast('Request declined','error')">Decline</button>
-              </div>
-            </div>
-            <div class="skill-row">
-              <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#ef4444);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:.85rem">MI</div>
-              <div class="skill-row__info">
-                <div class="skill-row__title">Meera Iyer wants to exchange</div>
-                <div class="skill-row__sub">Offers: Yoga · Wants: Your skill</div>
-              </div>
-              <span class="badge badge-pending">Pending</span>
+            <div class="empty-state">
+              <div class="empty-icon">📬</div>
+              <p>No exchange requests yet</p>
+              <p style="font-size:.82rem;margin-top:.5rem">List a skill to start receiving requests</p>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Right Column — Profile Card -->
+      <!-- Right Column -->
       <div>
         <div class="card-box">
           <div class="dash-section-title">My Profile <a href="profile.html">Edit →</a></div>
@@ -192,52 +171,244 @@
             <a href="profile.html" class="btn btn--ghost btn--full" style="justify-content:center">✏️ Edit Profile</a>
           </div>
         </div>
-
-        <div class="card-box">
-          <div class="dash-section-title">Platform Tips</div>
-          <div style="display:flex;flex-direction:column;gap:.75rem;font-size:.88rem;color:var(--text-muted)">
-            <div>💡 Complete your profile to get <strong style="color:var(--text)">3x more</strong> exchange requests</div>
-            <div>🎯 Add specific skill details so people know exactly what you offer</div>
-            <div>⭐ Respond to requests quickly to build your reputation</div>
-          </div>
-        </div>
       </div>
     </div>
-
   </div>
 </section>
+
+<!-- Edit Skill Modal -->
+<div class="modal-overlay" id="editModal" onclick="closeEditModal()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="modal__close" onclick="closeEditModal()">✕</button>
+    <h3 style="font-family:var(--font-head);font-weight:800;margin-bottom:1.5rem">Edit Skill</h3>
+    <input type="hidden" id="editSkillId"/>
+    <div class="form-group">
+      <label>Skill Title</label>
+      <input type="text" id="editTitle"/>
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <textarea id="editDescription" style="min-height:80px"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Looking For</label>
+      <input type="text" id="editLookingFor"/>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Category</label>
+        <select id="editCategory">
+          <option value="tech">💻 Tech</option>
+          <option value="creative">🎨 Creative</option>
+          <option value="music">🎵 Music</option>
+          <option value="language">🌍 Language</option>
+          <option value="fitness">💪 Fitness</option>
+          <option value="business">📊 Business</option>
+          <option value="other">🔖 Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Level</label>
+        <select id="editLevel">
+          <option value="Beginner">Beginner</option>
+          <option value="Intermediate">Intermediate</option>
+          <option value="Advanced">Advanced</option>
+          <option value="Expert">Expert</option>
+        </select>
+      </div>
+    </div>
+    <div id="editError" class="form-error"></div>
+    <div id="editSuccess" class="form-success"></div>
+    <div style="display:flex;gap:.75rem;margin-top:1rem">
+      <button class="btn btn--ghost" onclick="closeEditModal()" style="flex:1">Cancel</button>
+      <button class="btn btn--primary" onclick="saveEdit()" style="flex:2">💾 Save Changes</button>
+    </div>
+  </div>
+</div>
 
 <div id="footer-placeholder"></div>
 <script src="js/components.js"></script>
 <script>
   Components.init();
-
-  // Require auth
   if (!Auth.requireAuth()) {}
 
-  // Load user data
   const user = Auth.getUser();
-  if (user) {
-    document.getElementById('userName').textContent = user.firstName;
-    document.getElementById('userSubtitle').textContent = `${user.teach} teacher · Learning ${user.learn}`;
-    document.getElementById('profileAvatar').textContent = (user.firstName[0] + user.lastName[0]).toUpperCase();
-    document.getElementById('profileName').textContent = user.firstName + ' ' + user.lastName;
+  let mySkills = [];
+
+  // ===== Populate profile =====
+  function populateProfile() {
+    if (!user) return;
+    document.getElementById('userName').textContent    = user.firstName;
+    document.getElementById('userSubtitle').textContent= (user.teach || 'Skill') + ' teacher · Learning ' + (user.learn || 'skills');
+    document.getElementById('profileAvatar').textContent = ((user.firstName||'U')[0] + (user.lastName||'S')[0]).toUpperCase();
+    document.getElementById('profileName').textContent  = user.firstName + ' ' + user.lastName;
     document.getElementById('profileEmail').textContent = user.email;
-    document.getElementById('statExchanges').textContent = user.exchanges || 0;
-    document.getElementById('statRating').textContent = user.rating ? user.rating.toFixed(1) : '—';
-    document.getElementById('profileBadges').innerHTML = `
-      <div class="profile-badge"><span>📚</span><span>Teaches: ${user.teach}</span></div>
-      <div class="profile-badge"><span>🎯</span><span>Wants: ${user.learn}</span></div>
-      <div class="profile-badge"><span>🏷️</span><span>Category: ${getCategoryLabel(user.category || 'other')}</span></div>
+    document.getElementById('statExchanges').textContent= user.exchanges || 0;
+    document.getElementById('statRating').textContent   = user.rating ? Number(user.rating).toFixed(1) : '—';
+    document.getElementById('profileBadges').innerHTML  = `
+      <div class="profile-badge"><span>📚</span><span>Teaches: <strong>${user.teach||'—'}</strong></span></div>
+      <div class="profile-badge"><span>🎯</span><span>Wants: <strong>${user.learn||'—'}</strong></span></div>
     `;
   }
 
+  // ===== Load MY skills from API (GET /api/skills filtered by user) =====
+  async function loadMySkills() {
+    const container = document.getElementById('mySkillsList');
+    try {
+      // Try backend first
+      const data = await API.get('/skills');
+      if (data.success && data.skills) {
+        // filter to current user's skills
+        const uid = user ? user.id : null;
+        mySkills = data.skills.filter(s => {
+          const skillUserId = s.user && (s.user._id || s.user.id || s.user);
+          return String(skillUserId) === String(uid);
+        });
+        // If backend has no skills for this user, check localStorage
+        if (mySkills.length === 0) {
+          mySkills = getLocalSkills();
+        }
+      } else {
+        mySkills = getLocalSkills();
+      }
+    } catch(e) {
+      mySkills = getLocalSkills();
+    }
+    renderMySkills(container);
+    document.getElementById('statSkills').textContent = mySkills.length;
+  }
+
+  // LocalStorage fallback for demo/GitHub Pages mode
+  function getLocalSkills() {
+    try { return JSON.parse(localStorage.getItem('ss_my_skills') || '[]'); } catch { return []; }
+  }
+  function saveLocalSkills(skills) {
+    localStorage.setItem('ss_my_skills', JSON.stringify(skills));
+  }
+
+  function renderMySkills(container) {
+    if (!mySkills.length) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">📋</div>
+          <p>You haven't listed any skills yet</p>
+          <p style="font-size:.82rem;margin-top:.5rem">Click "+ List a New Skill" to get started</p>
+        </div>`;
+      return;
+    }
+    container.innerHTML = mySkills.map(s => `
+      <div class="skill-item" id="skill-${s._id || s.id}">
+        <div class="skill-item__icon">${(s.title||'S')[0].toUpperCase()}</div>
+        <div class="skill-item__info">
+          <div class="skill-item__title">${s.title}</div>
+          <div class="skill-item__sub">
+            ${getCategoryLabel(s.category)} · ${s.level || 'Intermediate'} · Wants: ${s.lookingFor || '—'}
+          </div>
+          <span class="badge ${s.isActive !== false ? 'badge-active' : 'badge-inactive'}" style="margin-top:.4rem">
+            ${s.isActive !== false ? 'Active' : 'Inactive'}
+          </span>
+        </div>
+        <div class="skill-item__actions">
+          <button class="btn btn--ghost" style="padding:.4rem .8rem;font-size:.8rem"
+            onclick="openEditModal('${s._id || s.id}')">✏️ Edit</button>
+          <button class="btn btn--ghost" style="padding:.4rem .8rem;font-size:.8rem;border-color:rgba(239,68,68,.3);color:var(--red)"
+            onclick="deleteSkill('${s._id || s.id}')">🗑️ Delete</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // ===== DELETE skill =====
+  async function deleteSkill(id) {
+    if (!confirm('Delete this skill listing?')) return;
+    try {
+      await API.delete('/skills/' + id);
+      mySkills = mySkills.filter(s => (s._id || s.id) !== id);
+      saveLocalSkills(mySkills);
+      renderMySkills(document.getElementById('mySkillsList'));
+      document.getElementById('statSkills').textContent = mySkills.length;
+      showToast('Skill deleted ✓', 'success');
+    } catch(e) {
+      // Demo mode delete
+      mySkills = mySkills.filter(s => (s._id || s.id) !== id);
+      saveLocalSkills(mySkills);
+      renderMySkills(document.getElementById('mySkillsList'));
+      document.getElementById('statSkills').textContent = mySkills.length;
+      showToast('Skill deleted ✓', 'success');
+    }
+  }
+
+  // ===== EDIT modal =====
+  function openEditModal(id) {
+    const s = mySkills.find(x => (x._id || x.id) === id);
+    if (!s) return;
+    document.getElementById('editSkillId').value     = id;
+    document.getElementById('editTitle').value        = s.title || '';
+    document.getElementById('editDescription').value  = s.description || '';
+    document.getElementById('editLookingFor').value   = s.lookingFor || '';
+    document.getElementById('editCategory').value     = s.category || 'other';
+    document.getElementById('editLevel').value        = s.level || 'Intermediate';
+    document.getElementById('editError').textContent  = '';
+    document.getElementById('editSuccess').textContent= '';
+    document.getElementById('editModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeEditModal() {
+    document.getElementById('editModal').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  // ===== SAVE EDIT (PUT /api/skills/:id) =====
+  async function saveEdit() {
+    const id          = document.getElementById('editSkillId').value;
+    const title       = document.getElementById('editTitle').value.trim();
+    const description = document.getElementById('editDescription').value.trim();
+    const lookingFor  = document.getElementById('editLookingFor').value.trim();
+    const category    = document.getElementById('editCategory').value;
+    const level       = document.getElementById('editLevel').value;
+    const errEl       = document.getElementById('editError');
+    const succEl      = document.getElementById('editSuccess');
+    errEl.textContent = '';
+
+    if (!title || !description || !lookingFor) {
+      errEl.textContent = 'Please fill in all fields.';
+      return;
+    }
+
+    try {
+      await API.put('/skills/' + id, { title, description, lookingFor, category, level });
+    } catch(e) { /* demo mode continues below */ }
+
+    // Update local state
+    mySkills = mySkills.map(s => (s._id||s.id) === id
+      ? { ...s, title, description, lookingFor, category, level }
+      : s
+    );
+    saveLocalSkills(mySkills);
+    renderMySkills(document.getElementById('mySkillsList'));
+    succEl.textContent = '✅ Skill updated!';
+    setTimeout(closeEditModal, 1200);
+    showToast('Skill updated ✓', 'success');
+  }
+
+  // ===== Tab switcher =====
   function switchTab(name, btn) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     btn.classList.add('active');
     document.getElementById('tab-' + name).classList.add('active');
+    if (name === 'myskills') loadMySkills();
   }
+
+  // ===== Init =====
+  populateProfile();
+  loadMySkills();
+
+  // If coming back from list-skill, also reload skills from localStorage
+  window.addEventListener('focus', () => {
+    if (document.getElementById('tab-myskills').classList.contains('active')) loadMySkills();
+  });
 </script>
 </body>
 </html>

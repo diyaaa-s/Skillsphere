@@ -187,6 +187,13 @@ const API = {
       return Promise.resolve({ success: true, user });
     }
     if (method === 'POST' && path === '/skills') {
+      // Save to localStorage for dashboard to read
+      try {
+        const existing = JSON.parse(localStorage.getItem('ss_my_skills') || '[]');
+        const newSkill = { ...body, _id: 'local_' + Date.now(), id: 'local_' + Date.now(), isActive: true, views: 0, requests: 0 };
+        existing.push(newSkill);
+        localStorage.setItem('ss_my_skills', JSON.stringify(existing));
+      } catch(e) {}
       return Promise.resolve({ success: true, message: 'Skill listed successfully!', skill: body });
     }
     return Promise.resolve({ success: true, message: 'OK (demo mode)' });
